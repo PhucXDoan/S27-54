@@ -1,52 +1,76 @@
-//#set page(height: auto)
-#set text(size: 13pt)
-#set heading(numbering: "(1.1)")
-#set par(justify: true)
-#set enum(spacing: 2em)
-#set list(spacing: 2em)
-#set page(margin: (top: 8em))
-#show heading: set block(above: 2em, below: 1em)
-#show heading.where(level: 1): set text(size: 20pt)
-#show heading.where(level: 2): set text(size: 14pt)
-#show quote.where(block: true): set block(breakable: false)
-
-#show quote.where(block: true): block.with(
-  fill: luma(245),
-  inset: (left: 1em, rest: 1em),
-  radius: 3pt,
-  stroke: (left: 2pt + luma(120)),
+#set page(
+  margin : (
+    top  : 8em,
+  ),
 )
-#show quote.where(block: true): set text(style: "italic")
-#show quote.where(block: true): set block(above: 1em, below: 1em)
 
-#let TODO(..args) = {
-  let body = if args.pos().len() >= 1 {
-    args.pos().at(0)
-  } else {
-    none
-  }
-  box(
-    fill: rgb("FFEEEE"),
-    stroke: 0.5pt + rgb("FF5555"),
-    inset: (x: 4pt, y: 0pt),
-    outset: (y: 3pt),
-    radius: 2pt,
-    [
-      #if body == none or body == [] [
-        #text(fill: rgb("D32F2F"), weight: "bold")[TODO]
-      ] else [
-        #text(fill: rgb("D32F2F"), weight: "bold")[TODO: #body]
-      ]
-    ]
-  )
-}
+#set heading(
+  numbering : "(1.1)",
+)
+
+#set par(
+  justify : true,
+)
+
+#set text(
+  size : 13pt,
+)
+
+#set enum(
+  spacing: 2em,
+)
+
+#set list(
+  spacing : 2em,
+)
+
+#show heading : set block(
+  above : 2em,
+  below : 1em,
+)
+
+#show heading.where(level : 1) : set text(
+  size : 20pt,
+)
+
+#show heading.where(level : 2) : set text(
+  size : 14pt,
+)
+
+#show quote.where(block : true) : set block(
+  breakable : false,
+)
+
+#show quote.where(block : true): block.with(
+  fill   : luma(245),
+  radius : 3pt,
+  inset  : (
+    left : 1em,
+    rest : 1em,
+  ),
+  stroke : (
+    left : 2pt + luma(120),
+  ),
+)
+
+#show quote.where(block : true) : set text(
+  style : "italic",
+)
+
+#show quote.where(block : true) : set block(
+  above: 1em,
+  below: 1em,
+)
 
 #set page(
-  header: context [
-    #set text(size: 12pt)
+
+  header : context [
+
+    #set text(size : 12pt)
+
     #grid(
-      columns: (1fr, auto),
-      align: (left, right),
+      columns : (1fr , auto ),
+      align   : (left, right),
       [
         S27-54 \
         Requirements Specifications
@@ -55,101 +79,208 @@
         Page #counter(page).get().first()
       ],
     )
+
     #v(-6pt)
-    #line(length: 100%, stroke: 0.5pt + gray)
+    #line(length : 100%, stroke : 0.5pt + gray)
     #v(1em)
-  ]
+
+  ],
+
 )
 
+#let TODO(..args) = {
 
+  let body = if args.pos().len() >= 1 { args.pos().at(0) } else { [] }
 
-////////////////////////////////////////////////////////////////////////////////
+  box(
+    fill   : rgb("FFEEEE"),
+    stroke : rgb("FF5555") + 0.5pt,
+    inset  : (x : 4pt, y : 0pt),
+    outset : (         y : 3pt),
+    radius : 2pt,
+    [
+      #text(fill : rgb("D32F2F"), weight : "bold")[
+        TODO#if body != [] [:] #body
+      ]
+    ]
+  )
 
+}
 
+#let standard-table(
+  title      : none,
+  label-name : none,
+  caption    : none,
+  breakable  : false,
+  size       : 1em,
+  alignment  : center + horizon,
+  columns    : auto,
+  headers    : (),
+  ..rows,
+) = {
 
-#let maroon = rgb("#7b1f3a")
+  let the-table = table(
+    columns : columns,
+    inset   : 6pt,
+    align   : alignment,
+    ..headers.map(
+      h => table.cell(fill : rgb("#7B1F3A"))[#text(fill : white, weight: "bold")[#h]]
+    ),
+    ..rows.pos(),
+  )
 
-#align(center)[
-  #block(breakable: false)[
-    #table(
-      columns : 2,
-      stroke  : none,
-      align   : (right, left),
-      [*Document Title       *], [Requirements Specifications],
-      [*Document \#          *], [RS-01],
-      [*Revision \#          *], [1],
-      [*Previous Doc/Rev \#  *], [N/A],
+  align(center)[
+
+    #if title != none [
+      *#title*
+    ]
+
+    #show figure : set block(
+      breakable : breakable
+    )
+
+    #show table.cell : set text(
+      size: size,
+    )
+
+    #if caption == none {
+      the-table
+    } else {
+
+      let the-figure = figure(
+        caption : caption,
+        the-table,
+      )
+
+      if label-name == none [
+        #the-figure
+      ] else [
+        #the-figure
+        #label(label-name)
+      ]
+
+    }
+
+  ]
+
+}
+
+#let standard-image(
+  caption : none,
+  path    : none,
+) = {
+
+  align(center)[
+    #figure(
+      caption : caption,
+      image(path),
     )
   ]
-]
 
-#v(2em)
+}
 
-#align(center)[
-  *CHANGE HISTORY*
-  #table(
-    columns : (auto, auto, auto, auto, auto),
-    inset   : 6pt,
-    align   : (center + horizon, center + horizon, center + horizon, center + horizon, center + horizon),
+#let standard-quote(
+  attribution,
+  body,
+) = {
 
-    table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Rev.]],
-    table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Date]],
-    table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Detailed Change Description]],
-    table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Affected \ Documents]],
-    table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Supporting \ Documents]],
+  quote(
+    block       : true,
+    attribution : attribution,
+  )[
+    #body
+  ]
 
-    [01], [9/23/26], [Initial Release], [N/A], [N/A],
-  )
-]
+}
 
-#v(2em)
 
-#align(center)[
-  *DOCUMENT REVIEW AND APPROVAL*
-  #table(
-    columns : (auto, auto, auto, auto),
-    inset   : 6pt,
-    align   : (center + horizon, center + horizon, center + horizon, center + horizon),
-
-    table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Name]],
-    table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Title]],
-    table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Contributed \ Sections]],
-    table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Signature/Date]],
-
-    [Adam Sbahi        ], [Project Lead         ], [4.4, 5.2, 5.3], [Sept. 24th, 2026],
-    [Joshua Bryant     ], [Engineering          ], [2.2], [Sept. 24th, 2026],
-    [Jerry Cheng       ], [Engineering          ], [5.1, 5.2], [Sept. 24th, 2026],
-    [Phuc Doan         ], [Engineering          ], [1, 3.1, 3.2, 3.3, 4.1, 4.2, 4.3, 4.4], [Sept. 24th, 2026],
-    [Kevin Lee         ], [Engineering          ], [5.3], [Sept. 24th, 2026],
-    [Diego Penadillo   ], [Engineering          ], [3.2, 5.2], [Sept. 24th, 2026],
-    [Megan Marchitello ], [Customer             ], [N/A], [#TODO[]],
-    [Dr. Joe Adams     ], [Mentor               ], [N/A], [#TODO[]],
-  )
-]
-
-#pagebreak()
 
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
+
+
+
+
+#align(center)[
+  #table(
+    columns   : 2,
+    stroke    : none,
+    align     : (right, left),
+    [*Document Title       *], [Requirements Specifications],
+    [*Document \#          *], [RS-01                      ],
+    [*Revision \#          *], [1                          ],
+    [*Previous Doc/Rev \#  *], [N/A                        ],
+  )
+]
+
+#v(2em)
+
+#standard-table(
+  title        : [CHANGE HISTORY],
+  columns      : (auto  , auto  , auto                         , auto                  , auto                    ),
+  headers      : ([Rev.], [Date], [Detailed Change Description], [Affected \ Documents], [Supporting \ Documents]),
+  [01], [9/23/26], [Initial Release], [N/A], [N/A],
+)
+
+#v(2em)
+
+#standard-table(
+  title        : [DOCUMENT REVIEW AND APPROVAL],
+  columns      : (auto  , auto   , auto                  , auto            ),
+  headers      : ([Name], [Title], [Contributed Sections], [Signature/Date]),
+  [Adam Sbahi       ], [Project Lead], [4.4, 5.2, 5.3                       ], [Sept. 24th, 2026],
+  [Joshua Bryant    ], [Engineering ], [2.2                                 ], [Sept. 24th, 2026],
+  [Jerry Cheng      ], [Engineering ], [5.1, 5.2                            ], [Sept. 24th, 2026],
+  [Phuc Doan        ], [Engineering ], [1, 3.1, 3.2, 3.3, 4.1, 4.2, 4.3, 4.4], [Sept. 24th, 2026],
+  [Kevin Lee        ], [Engineering ], [5.3                                 ], [Sept. 24th, 2026],
+  [Diego Penadillo  ], [Engineering ], [3.2, 5.2                            ], [Sept. 24th, 2026],
+  [Megan Marchitello], [Customer    ], [N/A                                 ], [#TODO[]         ],
+  [Dr. Joe Adams    ], [Mentor      ], [N/A                                 ], [#TODO[]         ],
+)
+
+#pagebreak()
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 #outline(
-    title: "TABLE OF CONTENTS",
+    title : "TABLE OF CONTENTS",
 )
 
 #v(1em)
 
-#outline(title: none, target: figure.where(kind: image))
+#outline(
+  title  : none,
+  target : figure.where(kind: image),
+)
 
 #v(1em)
 
-#outline(title: none, target: figure.where(kind: table))
+#outline(
+  title  : none,
+  target : figure.where(kind: table),
+)
 
 #pagebreak()
 
 
 
+
+
 ////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 
 = Purpose
 
@@ -169,106 +300,74 @@ pertaining to the product.
 
 ////////////////////////////////////////////////////////////////////////////////
 
+
+
+
+
 = Definitions
+
+
 
 == Document Definitions
 
-#align(center)[
-  #figure(
-    table(
-      columns : (auto, auto),
-      inset   : 6pt,
-      align   : (center + horizon, left + horizon),
+#standard-table(
 
-      table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Term]],
-      table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Definition]],
+  caption   : [Document definitions.],
+  alignment : (center + horizon, left + horizon),
+  columns   : (auto            , auto          ),
+  headers   : ([Term]          , [Definition]  ),
 
-      [Verification], [
-        Confirmation by testing, analysis, demonstration, and/or
-        inspection that specified requirements have been fulfilled.
-      ],
+  [Verification], [
+    Confirmation by testing, analysis, demonstration, and/or
+    inspection that specified requirements have been fulfilled.
+  ],
 
-      [Validation], [
-        Establishing objective evidence that system specifications
-        conform to user needs and intended uses in the operational
-        environment.
-      ],
+  [Validation], [
+    Establishing objective evidence that system specifications
+    conform to user needs and intended uses in the operational
+    environment.
+  ],
 
-      [Component], [
-        One of the parts that make up a system. A component may
-        be hardware or software and may be subdivided into
-        components.
-      ],
+  [Component], [
+    One of the parts that make up a system. A component may
+    be hardware or software and may be subdivided into
+    components.
+  ],
 
-    ),
-    caption: "Document definitions."
-  )
-]
+)
 
 
 
 == Document Acronyms
 
-#align(center)[
-  #figure(
-    table(
-      columns : (auto, auto),
-      inset   : 6pt,
-      align   : (center + horizon, left + horizon),
+#standard-table(
+  caption   : [Document acronyms.],
+  alignment : (center + horizon, left + horizon),
+  columns   : (auto            , auto          ),
+  headers   : ([Acronym]       , [Description] ),
+  [IEEE], [Institute of Electrical and Electronics Engineers],
+  [ECG ], [Electrocardiogram                                ],
+  [MCU ], [Microcontroller Unit                             ],
+  // [DHF ], [#TODO[Not even used.] Design History File],
+  // [CR  ], [#TODO[Not even used.] Customer Requirements],
+  // [SR  ], [#TODO[Not even used.] System Requirements],
+  // [BOM ], [#TODO[Not even used.] Bill of Materials],
+  // [IMU ], [#TODO[Not even used.] Intertial Measurement Unit],
+  // [RTM ], [#TODO[Not even used.] Requirements Traceability Matrix],
+  // [WBS ], [#TODO[Not even used.] Work Breakdown Structure],
+)
 
-      table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Acronym]],
-      table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Description]],
+#pagebreak()
 
-//      [DHF], [
-//        Design History File #TODO[Not even used.]
-//      ],
 
-      [IEEE], [
-        Institute of Electrical and Electronics Engineers
-      ],
-
-//      [CR], [
-//        Customer Requirements #TODO[Not even used.]
-//      ],
-
-//      [SR], [
-//        System Requirements #TODO[Not even used.]
-//      ],
-//
-//      [BOM], [
-//        Bill of materials #TODO[Not even used.]
-//      ],
-
-      [ECG], [
-        Electrocardiogram
-      ],
-
-//      [IMU], [
-//        Intertial measurement unit #TODO[Not even used.]
-//      ],
-
-      [MCU], [
-        Microcontroller unit
-      ],
-
-//      [RTM], [
-//        Requirements traceability matrix #TODO[Not even used.]
-//      ],
-
-//      [WBS], [
-//        Work breakdown structure #TODO[Not even used.]
-//      ],
-
-    ),
-    caption: "Document acryonyms."
-  )
-]
 
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#pagebreak()
+
+
+
 
 = Customer Needs
 
@@ -310,13 +409,10 @@ and can be disconnected from the overall system.
 This is to support situations where the mounting of a particular sensor
 may be infeasible for a particular patient.
 
-#align(center)[
-  #figure(
-    image("conops.png"),
-    caption: [Top-level system diagram.]
-  )
-]
-
+#standard-image(
+  caption : [Top-level system diagram.],
+  path    : "conops.png",
+)
 
 The sensors monitor the corresponding vitals of the patient
 and send the data to the main MCU by wire.
@@ -339,37 +435,32 @@ The automated medical system will incorporate diagnostics (e.g., LEDs, buzzers)
 to indicate the working condition of the device.
 It's intended for the automated medical system to be initially used on around 1-3 patients at a time.
 
-#align(center)[
-  #figure(
-    table(
-      columns : (auto, auto),
-      inset   : 6pt,
-      align   : (center + horizon, left + horizon),
+#standard-table(
 
-      table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Need]],
-      table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Statement]],
+  caption   : [Top-level customer needs.],
+  alignment : (center + horizon, left + horizon),
+  columns   : (auto            , auto          ),
+  headers   : ([Need]          , [Statement]   ),
 
-      [Continuous monitoring], [
-        System shall monitor vitals without staff intervention.
-      ],
-      [Non-invasive], [
-        System shall not restrict foal movement or cause distress.
-      ],
-      [Timely alerts], [
-        Staff shall be notified within 60 seconds of an
-        abnormal reading or a system issue (e.g., low battery).
-      ],
-      [Low maintenance], [
-        Battery shall support a full shift without recharge.
-      ],
-      [Documentation], [
-        The product shall be documented with a user guide for the medical and IT staff.
-      ],
+  [Continuous monitoring], [
+    System shall monitor vitals without staff intervention.
+  ],
+  [Non-invasive], [
+    System shall not restrict foal movement or cause distress.
+  ],
+  [Timely alerts], [
+    Staff shall be notified within 60 seconds of an
+    abnormal reading or a system issue (e.g., low battery).
+  ],
+  [Low maintenance], [
+    Battery shall support a full shift without recharge.
+  ],
+  [Documentation], [
+    The product shall be documented with a user guide for the medical and IT staff.
+  ],
 
-    ),
-    caption: "Top-level customer needs."
-  )
-]
+)
+
 
 
 == Key Stakeholders
@@ -428,9 +519,16 @@ It's intended for the automated medical system to be initially used on around 1-
 
 
 
+
 ////////////////////////////////////////////////////////////////////////////////
 
+
+
+
+
 = General Constraints
+
+
 
 == External Factors - Global, Cultural, and Environmental
 
@@ -490,10 +588,6 @@ without introducing issues such as alarm fatigue. System requirements ME-2 and M
 
 
 
-
-
-////////////////////////////////////////////////////////////////////////////////
-
 == Social Factors - Public Health, Safety, and Welfare
 
 The development of the product
@@ -548,36 +642,14 @@ so that a system failure/issue is more immediately visible to the staff (system 
 
 
 
-
-
-
-//#TODO[
-//  Evaluate the external factors listed above as they related to your product/service. This section
-//should be 3-5 paragraphs in length. Describe any lab safety practices that you will follow as well
-//as safety standards in engineering design. Use references to the literature where applicable.
-//Additionally, mention any customer requirements or target specifications that have been initiated
-//based on this analysis and be sure that they are included in the tables below.
-//]
-
-
-
-
 == Ethical Factors - Global, Societal, Economic, and Environmental
-
-//A focus on resourcefulness will also be held throughout the development of the product.
-//Prototypes and multiple alternative designs will be made and validated,
-//but only through the employment of IEEE's Principle 6#cite(<ieee2020code>)
-//to ensure no unnecessary pressure is placed upon society and the environment.
-//Acts of resourcefulness include designing for only minimal PCB revisions
-//and minimal distinct component counts,
-//both of which has the impact of reducing e-waste.
 
 When it comes to ethical factors involved in the product's development,
 three core principles of the IEEE code of ethics can be cited.
 
 #v(1em)
 
-#quote(block: true, attribution: [IEEE, @ieee2020code])[
+#standard-quote([IEEE, @ieee2020code])[
   1\. to hold paramount the safety, health, and welfare of the public, to
   strive to comply with ethical design and sustainable development
   practices, to protect the privacy of others, and to disclose promptly
@@ -589,11 +661,9 @@ With this in mind,
 all design decisions and requirements will factor in the safety of the patient.
 Any known shortcomings in the product design or implementation will be communicated to stakeholders.
 
-
-
 #v(1em)
 
-#quote(block: true, attribution: [IEEE, @ieee2020code])[
+#standard-quote([IEEE, @ieee2020code])[
   5\. to seek, accept, and offer honest criticism of technical work,
   to acknowledge and correct errors, to be honest and realistic in
   stating claims or estimates based on available data, and to credit
@@ -608,9 +678,7 @@ to ensure any gaps in understanding will always be resolved.
 
 #v(1em)
 
-
-
-#quote(block: true, attribution: [IEEE, @ieee2020code])[
+#standard-quote([IEEE, @ieee2020code])[
   6\. to maintain and improve our technical competence and to undertake
   technological tasks for others only if qualified by training or experience,
   or after full disclosure of pertinent limitations;
@@ -623,7 +691,6 @@ Work will only be done if it can be finished competently or with professional gu
 
 #v(1em)
 
-
 With these guiding principles stated,
 the engineering team aims for a productive and ethical product design.
 Transparent communication,
@@ -634,6 +701,8 @@ and upholding accountability can only be done through
 frequent communication between the team, the stakeholders, and the members thereof.
 
 #pagebreak()
+
+
 
 == Use Case
 
@@ -723,7 +792,7 @@ frequent communication between the team, the stakeholders, and the members there
     [
     *Alternative Flows*:\
     #enum(
-      spacing: 1em,
+      spacing : 1em,
       [
         _Battery depletion._\
         The device alerts staff on low battery.
@@ -745,7 +814,7 @@ frequent communication between the team, the stakeholders, and the members there
   [
     *Exception Flows (Error Conditions)*:\
     #enum(
-      spacing: 1em,
+      spacing : 1em,
       [
         _False alarm._\
         A sensor is displaced
@@ -798,7 +867,7 @@ frequent communication between the team, the stakeholders, and the members there
   [
     *Notes / Assumptions*:\
     #enum(
-      spacing: 1em,
+      spacing : 1em,
       [
         The power draw of the device will be optimized
         for a minimum 24-hour operating life.
@@ -824,266 +893,401 @@ frequent communication between the team, the stakeholders, and the members there
 
 
 
+
 ////////////////////////////////////////////////////////////////////////////////
 
-#[
-  #show figure: set block(breakable: true)
-#page(flipped: true)[
+
+
+
+
+#page(
+  flipped : true,
+)[
+
   = Product Requirements
 
-  == System Requirements
-  #align(center)[
-    #figure(
-      {
-        show table.cell: set text(size: 1.0em)
-        table(
-          columns : (4em, 5em, auto, auto),
-          inset   : 6pt,
-          align   : (center + horizon, center + horizon, center + horizon, center + horizon, center + horizon, center + horizon),
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Req ID]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Priority]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Requirement]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Verification Type]],
-          [FUN-1], [1],	[The system SHALL monitor heart rate.], [DEMONSTRATION],
-          [FUN-2], [2], [The system SHOULD monitor heart rhythm through ECG.], [DEMONSTRATION],
-          [FUN-3], [1], [The system SHALL monitor respiratory rate.], [DEMONSTRATION],
-          [FUN-4], [2], [The system SHOULD monitor respiratory pattern.], [DEMONSTRATION],
-          [FUN-5], [1], [The system SHALL measure patient movement.], [DEMONSTRATION],
-          [FUN-6], [1], [The system SHALL notify relevant medical staff of warnings and errors.], [DEMONSTRATION],
-          [FUN-7], [1], [The system SHALL be compatible with existing medical intranet systems. ], [DEMONSTRATION],
-          [FUN-8], [2], [The system SHOULD include on-board self-diagnostics that display the status the statuses of power, sensors, and network.], [INSPECTION],
-          [PER-1], [2], [The heart rate monitoring SHALL be within #sym.plus.minus;2 BPM compared to a commercial heart rate monitor product.], [TEST],
-          [PER-2], [2], [The respiratory rate monitoring SHALL be within #sym.plus.minus;2 BrPM (breaths per min) compared to a commercial respiratory rate monitor.], [TEST],
-          [PER-3], [1], [The movement monitoring system SHALL detect roll-onto-back events with at least 90% agreement compared to manual observation.], [TEST],
-          [PER-4], [1], [The movement monitoring system SHALL detect when the horse's front legs are in front of its face with at least 90% agreement compared to manual observation. ], [TEST],
-          [PER-5], [1], [The movement monitoring system SHALL detect laying/standing transitions with at least 90% agreement compared to manual observation.], [TEST],
-          [PER-6], [1], [The system SHALL transmit an emergency alert within 60 seconds of detecting signs of distress.], [TEST],
-          [PER-7], [3], [The system QoS MAY be in compliance with IEEE Std 11073-00101™-2008.], [TEST],
-          [COM-1], [3], [The system SHALL not create electromagnetic interference with other medical equipment or IT systems (IEC 60601-1).], [ANALYSIS],
-          [COM-2], [1], [The system SHALL comply with relevant veterinary and medical privacy regulations.], [ANALYSIS],
-          [COM-3], [2], [The system SHALL have a maximum leakage current for normal and single fault conditions of 100uA and 500uA, respectively (IEC 60601-1).], [ANALYSIS],
-          [ENV-1], [1], [The system SHALL perform all functions in the expected environment of the veterinary center.], [ANALYSIS],
-          [REL-1], [1], [The system SHALL withstand impacts proportional to the mass of the patient.], [TEST],
-          [REL-2], [1], [The firmware SHALL operate continuously for at least 7 days without crashing, freezing, unintended resetting, or manual power cycling.], [TEST],
-          [POW-1], [1], [The system SHALL sustain on battery power for at least 1 day.], [TEST],
-          [POW-2], [2], [The system SHALL alert staff on low battery power.], [TEST],
-          [POW-3], [3], [The system SHOULD show the battery level on the GUI.], [TEST],
-          [POW-4], [3], [The system SHOULD display the remaining battery time on the GUI.], [TEST],
-          [ME-1], [1], [The product and harness SHALL minimize risk of mechanical hazards including cuts by sharp surfaces and entanglement.], [INSPECTION],
-          [ME-2], [2], [Battery swap SHOULD be able to be performed by personnel with limited technical knowledge of the system.], [DEMONSTRATION],
-          [ME-3], [1], [The harness SHALL be adjustable and flexible to accommodate varying foal sizes without restricting normal movement or causing discomfort.], [DEMONSTRATION],
-          [ME-4 ], [1], [The harness SHALL NOT place excessive pressure onto the foals.], [DEMONSTRATION],
-          [ME-5], [2], [The product SHOULD minimize interference to existing workflow of medical staff.], [DEMONSTRATION],
-          [I/O-1], [2], [The medical system SHOULD still be functional without the heart rate monitor.], [TEST],
-          [I/O-2], [2], [The medical system SHOULD still be functional without the EKG monitor.], [TEST],
-          [I/O-3], [2], [The medical system SHOULD still be functional without the respiratory monitor.], [TEST],
-          [I/O-4], [2], [The medical system SHOULD still be functional without the movement monitor.], [TEST],
-          [I/O-5], [3], [The medical device SHOULD have indicators (e.g., LEDs, buzzers) to indicate the current device operating condition (e.g., battery level).], [DEMONSTRATION],
-          [CON-1], [2], [The window for nominal vital sign parameters SHALL be configurable.], [DEMONSTRATION],
 
-        )
-      },
-      caption: "Product requirements.",
-    )
-  ]
+
+  == System Requirements
+
+  #standard-table(
+
+    caption   : [Product requirements.],
+    breakable : true,
+    alignment : (center + horizon, center + horizon, center + horizon, center + horizon   ),
+    columns   : (4em             , 5em             , auto            , auto               ),
+    headers   : ([Req ID]        , [Priority]      , [Requirement]   , [Verification Type]),
+
+    [FUN-1], [1], [
+      The system SHALL monitor heart rate.
+    ], [DEMONSTRATION],
+
+    [FUN-2], [2], [
+      The system SHOULD monitor heart rhythm through ECG.
+    ], [DEMONSTRATION],
+
+    [FUN-3], [1], [
+      The system SHALL monitor respiratory rate.
+    ], [DEMONSTRATION],
+
+    [FUN-4], [2], [
+      The system SHOULD monitor respiratory pattern.
+    ], [DEMONSTRATION],
+
+    [FUN-5], [1], [
+      The system SHALL measure patient movement.
+    ], [DEMONSTRATION],
+
+    [FUN-6], [1], [
+      The system SHALL notify relevant medical staff of warnings and errors.
+    ], [DEMONSTRATION],
+
+    [FUN-7], [1], [
+      The system SHALL be compatible with existing medical intranet systems.
+    ], [DEMONSTRATION],
+
+    [FUN-8], [2], [
+      The system SHOULD include on-board self-diagnostics that display the status the statuses of power, sensors, and network.
+    ], [INSPECTION],
+
+    [PER-1], [2], [
+      The heart rate monitoring SHALL be within #sym.plus.minus;2 BPM compared to a commercial heart rate monitor product.
+    ], [TEST],
+
+    [PER-2], [2], [
+      The respiratory rate monitoring SHALL be within #sym.plus.minus;2 BrPM (breaths per min) compared to a commercial respiratory rate monitor.
+    ], [TEST],
+
+    [PER-3], [1], [
+      The movement monitoring system SHALL detect roll-onto-back events with at least 90% agreement compared to manual observation.
+    ], [TEST],
+
+    [PER-4], [1], [
+      The movement monitoring system SHALL detect when the horse's front legs are in front of its face with at least 90% agreement compared to manual observation.
+    ], [TEST],
+
+    [PER-5], [1], [
+      The movement monitoring system SHALL detect laying/standing transitions with at least 90% agreement compared to manual observation.
+    ], [TEST],
+
+    [PER-6], [1], [
+      The system SHALL transmit an emergency alert within 60 seconds of detecting signs of distress.
+    ], [TEST],
+
+    [PER-7], [3], [
+      The system QoS MAY be in compliance with IEEE Std 11073-00101™-2008.
+    ], [TEST],
+
+    [COM-1], [3], [
+      The system SHALL not create electromagnetic interference with other medical equipment or IT systems (IEC 60601-1).
+    ], [ANALYSIS],
+
+    [COM-2], [1], [
+      The system SHALL comply with relevant veterinary and medical privacy regulations.
+    ], [ANALYSIS],
+
+    [COM-3], [2], [
+      The system SHALL have a maximum leakage current for normal and single fault conditions of 100uA and 500uA, respectively (IEC 60601-1).
+    ], [ANALYSIS],
+
+    [ENV-1], [1], [
+      The system SHALL perform all functions in the expected environment of the veterinary center.
+    ], [ANALYSIS],
+
+    [REL-1], [1], [
+      The system SHALL withstand impacts proportional to the mass of the patient.
+    ], [TEST],
+
+    [REL-2], [1], [
+      The firmware SHALL operate continuously for at least 7 days without crashing, freezing, unintended resetting, or manual power cycling.
+    ], [TEST],
+
+    [POW-1], [1], [
+      The system SHALL sustain on battery power for at least 1 day.
+    ], [TEST],
+
+    [POW-2], [2], [
+      The system SHALL alert staff on low battery power.
+    ], [TEST],
+
+    [POW-3], [3], [
+      The system SHOULD show the battery level on the GUI.
+    ], [TEST],
+
+    [POW-4], [3], [
+      The system SHOULD display the remaining battery time on the GUI.
+    ], [TEST],
+
+    [ME-1 ], [1], [
+      The product and harness SHALL minimize risk of mechanical hazards including cuts by sharp surfaces and entanglement.
+    ], [INSPECTION],
+
+    [ME-2 ], [2], [
+      Battery swap SHOULD be able to be performed by personnel with limited technical knowledge of the system.
+    ], [DEMONSTRATION],
+
+    [ME-3 ], [1], [
+      The harness SHALL be adjustable and flexible to accommodate varying foal sizes without restricting normal movement or causing discomfort.
+    ], [DEMONSTRATION],
+
+    [ME-4 ], [1], [
+      The harness SHALL NOT place excessive pressure onto the foals.
+    ], [DEMONSTRATION],
+
+    [ME-5 ], [2], [
+      The product SHOULD minimize interference to existing workflow of medical staff.
+    ], [DEMONSTRATION],
+
+    [I/O-1], [2], [
+      The medical system SHOULD still be functional without the heart rate monitor.
+    ], [TEST],
+
+    [I/O-2], [2], [
+      The medical system SHOULD still be functional without the EKG monitor.
+    ], [TEST],
+
+    [I/O-3], [2], [
+      The medical system SHOULD still be functional without the respiratory monitor.
+    ], [TEST],
+
+    [I/O-4], [2], [
+      The medical system SHOULD still be functional without the movement monitor.
+    ], [TEST],
+
+    [I/O-5], [3], [
+      The medical device SHOULD have indicators (e.g., LEDs, buzzers) to indicate the current device operating condition (e.g., battery level).
+    ], [DEMONSTRATION],
+
+    [CON-1], [2], [
+      The window for nominal vital sign parameters SHALL be configurable.
+    ], [DEMONSTRATION],
+
+  )
+
 ]
-]
+
 
 
 == Target Specifications
 
-
-
 Assumptions made for @target-specifications:
 
 #enum(
-  spacing: 1em,
-  [Sensors are assumed to be correctly positioned and securely attached to the foal during verification testing.],
-  [Abnormal movement events the device is detecting only include front legs positioned in front of the foal's face, rolling on to the back, seizures, muscle fasciculations, and #sym.gt.eq 3 standing to lying and lying to standing transitions within 1 hour.],
-  [Abnormal movement events will be verified using direct observation or recorded video during testing of the movement detection system of the device. ],
-  [The reported abnormal movement detection accuracy assumes the system is tested using enough examples of both abnormal and normal foal movements to meaningfully evaluate performance.],
-  [Commercially available heart-rate monitoring equipment will be used as a reference when evaluating the accuracy of the heart-rate monitoring system of the device. The respiratory rate monitoring system will be evaluated in a similar manner. ],
-  [Emergency alert transmission time will be measured from the point at which the system identifies an abnormal condition to the point at which the alert is received by the intended receiving device.],
+  spacing : 1em,
+  [
+    Sensors are assumed to be correctly positioned and securely attached to the foal during verification testing.
+  ],
+  [
+    Abnormal movement events the device is detecting only include front legs positioned in front of the foal's face, rolling on to the back, seizures, muscle fasciculations, and #sym.gt.eq 3 standing to lying and lying to standing transitions within 1 hour.
+  ],
+  [
+    Abnormal movement events will be verified using direct observation or recorded video during testing of the movement detection system of the device.
+  ],
+  [
+    The reported abnormal movement detection accuracy assumes the system is tested using enough examples of both abnormal and normal foal movements to meaningfully evaluate performance.
+  ],
+  [
+    Commercially available heart-rate monitoring equipment will be used as a reference when evaluating the accuracy of the heart-rate monitoring system of the device. The respiratory rate monitoring system will be evaluated in a similar manner.
+  ],
+  [
+    Emergency alert transmission time will be measured from the point at which the system identifies an abnormal condition to the point at which the alert is received by the intended receiving device.
+  ],
 )
 
-
-#page(flipped: true)[
-  #align(center)[
-    #figure(
-      {
-        show table.cell: set text(size: 0.85em)
-        table(
-          columns : (3em, 10em, 8em, auto, auto, 21em),
-          inset   : 6pt,
-          align   : (center + horizon, center + horizon, center + horizon, center + horizon, center + horizon, center + horizon),
-
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Req \ ID]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Metric]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Units]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Marginal \ Value]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Target (Ideal) \ Value]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Traceability / Rationale]],
-
-          [PER-1],
-          [Heart rate monitoring accuracy compared to a commercial heart rate sensor.],
-          [BPM],
-          [#sym.plus.minus;5 BPM],
-          [#sym.plus.minus;2 BPM],
-          [Detect abnormal heart rate as a metric to alert medical staff. Device must be able to reliably send alerts.],
-
-          [PER-2],
-          [Respiratory rate monitoring accuracy compared to a commercial device.],
-          [Breaths per Minute (BrPM)],
-          [#sym.plus.minus;5 BrPM],
-          [#sym.plus.minus;2 BrPM],
-          [Detect abnormal breathing as a metric to alert medical staff. Device must be able to reliably send alerts.],
-
-          [PER-3],
-          [Detection of roll-onto-back events accuracy.],
-          [Roll Angle (Degrees)],
-          [0#sym.degree - 45#sym.degree \ 70#sym.degree - 110#sym.degree],
-          [120#sym.degree - 145#sym.degree],
-          [Measure the total degrees turned and if its standing (0#sym.degree - 45#sym.degree) or is in lateral recumbency (70#sym.degree - 110#sym.degree) have that be acceptable. If it gets it (150#sym.degree - 180#sym.degree) then trigger and send an alert. ],
-
-          [PER-4],
-          [Detection of abnormal front leg behavior accuracy.],
-          [N/A],
-          [80%],
-          [90%],
-          [One of the foal's signs of distress is rubbing their face with their front legs. Device must be able to reliably detect this front leg behavior.],
-
-          [PER-5],
-          [Detection of standing to lying and lying to standing transitions accuracy.],
-          [N/A],
-          [80%],
-          [90%],
-          [Detect how many times the horses stand within a given hour. According to the client, if a foal stands more than three times within the hour, it means there is discomfort and attention is needed.],
-
-          [PER-6],
-          [Transmitting an emergency alert in a timely manner.],
-          [Seconds],
-          [90s],
-          [60s],
-          [Detect abnormal foal conditions and send a signal to alert medical staff in a timely manner.],
-
-          [POW-1],
-          [Battery life per usage.],
-          [Time],
-          [12 Hours],
-          [1 Day],
-          [Battery must power the device for as long as a typical medical staff shift to avoid having constant battery changes.]
-        )
-      },
-      caption: "Target specifications.",
-    ) <target-specifications>
-  ]
-]
-
-
 #page(flipped: true)[
 
-  #align(center)[
-    #figure(
-      {
-        show table.cell: set text(size: 1.0em)
-        table(
-          columns : (4em, auto, 10em, auto),
-          inset   : 6pt,
-          align   : (center + horizon, center + horizon, center + horizon, center + horizon),
+  #standard-table(
 
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Req. \#]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Requirement]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Source Document]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Details]],
+    label-name : "target-specifications",
+    caption    : [Target specifications.],
+    breakable  : true,
+    size       : 0.85em,
+    columns    : (4em             , 10em            , 6em             , auto              , 5em                     , auto                      ),
+    alignment  : (center + horizon, center + horizon, center + horizon, center + horizon  , center + horizon        , center + horizon          ),
+    headers    : ([Req \ ID      ], [Metric        ], [Units         ], [Marginal \ Value], [Target (Ideal) \ Value], [Traceability / Rationale]),
 
-          [COM-1],
-          [The system SHALL not create electromagnetic interference with other medical equipment or IT systems.],
-          [IEC 60601-1],
-          [General requirements and tests for electromagnetic emissions and electromagnetic immunity of medical electrical equipment.],
+    [PER-1],
+    [
+      Heart rate monitoring accuracy compared to a commercial heart rate sensor.
+    ],
+    [
+      BPM
+    ],
+    [
+      #sym.plus.minus;5 BPM
+    ],
+    [
+      #sym.plus.minus;2 BPM
+    ],
+    [
+      Detect abnormal heart rate as a metric to alert medical staff. Device must be able to reliably send alerts.
+    ],
 
-          [COM-2],
-          [The system SHALL comply with relevant veterinary and medical privacy regulations.],
-          [VMCVM and \ University Policies],
-          [Section 6: policies governed by the VT Vet Med school which include protecting the confidentiality and dignity of veterinary patients.],
+    [PER-2],
+    [
+      Respiratory rate monitoring accuracy compared to a commercial device.
+    ],
+    [
+      Breaths \ per Minute \ (BrPM)
+    ],
+    [
+      #sym.plus.minus;5 BrPM
+    ],
+    [
+      #sym.plus.minus;2 BrPM
+    ],
+    [
+      Detect abnormal breathing as a metric to alert medical staff. Device must be able to reliably send alerts.
+    ],
 
-          [COM-3],
-          [The system SHALL have a maximum leakage current for normal and single fault conditions of 100uA and 500uA, respectively.],
-          [IEC 60601-1],
-          [Clause 8.7.3 specifies the allowable values for leakage currents and patient auxiliary currents under both normal conditions and single fault conditions to protect patients and operators from electrical shock.],
+    [PER-3],
+    [
+      Detection of roll-onto-back events accuracy.
+    ],
+    [
+      Roll Angle \ (Degrees)
+    ],
+    [
+      0#sym.degree - 45#sym.degree \ 70#sym.degree - 110#sym.degree
+    ],
+    [
+      120#sym.degree - 145#sym.degree
+    ],
+    [
+      Measure the total degrees turned and if its standing (0#sym.degree - 45#sym.degree) or is in lateral recumbency (70#sym.degree - 110#sym.degree) have that be acceptable. If it gets it (150#sym.degree - 180#sym.degree) then trigger and send an alert. 
+    ],
 
-        )
-      },
-      caption: "Standards and statutory requirements."
-    )
-  ]
+    [PER-4],
+    [
+      Detection of abnormal front leg behavior accuracy.
+    ],
+    [
+      N/A
+    ],
+    [
+      80%
+    ],
+    [
+      90%
+    ],
+    [
+      One of the foal's signs of distress is rubbing their face with their front legs. Device must be able to reliably detect this front leg behavior.
+    ],
+
+    [PER-5],
+    [
+      Detection of standing to lying and lying to standing transitions accuracy.
+    ],
+    [
+      N/A
+    ],
+    [
+      80%
+    ],
+    [
+      90%
+    ],
+    [
+      Detect how many times the horses stand within a given hour. According to the client, if a foal stands more than three times within the hour, it means there is discomfort and attention is needed.
+    ],
+
+    [PER-6],
+    [
+      Transmitting an emergency alert in a timely manner.
+    ],
+    [
+      Seconds
+    ],
+    [
+      90s
+    ],
+    [
+      60s
+    ],
+    [
+      Detect abnormal foal conditions and send a signal to alert medical staff in a timely manner.
+    ],
+
+    [POW-1],
+    [
+      Battery life per usage.
+    ],
+    [
+      Time
+    ],
+    [
+      12 Hours
+    ],
+    [
+      1 Day
+    ],
+    [
+      Battery must power the device for as long as a typical medical staff shift to avoid having constant battery changes.
+    ],
+
+  )
+
 ]
-
 
 #page(flipped: true)[
-  == Benchmarking Information
 
-  #align(center)[
-    #figure(
-      {
-        show table.cell: set text(size: 0.9em)
-        table(
-          columns : (auto, auto, auto, auto, auto),
-          inset   : 6pt,
-          align   : (center + horizon, center + horizon, center + horizon, center + horizon),
+  #standard-table(
 
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Feature / Requirement]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Target Requirement]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Existing Alternative \#1]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Existing Alternative \#2]],
-          table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Existing Alternative \#3]],
+    caption    : [Standards and statutory requirements.],
+    breakable  : false,
+    size       : 1em,
+    columns    : (4em, auto, 10em, auto),
+    align      : (center + horizon, center + horizon, center + horizon , center + horizon),
+    headers    : ([Req. \#       ], [Requirement   ], [Source Document], [Details       ]),
 
+    [COM-1],
+    [
+      The system SHALL not create electromagnetic interference with other medical equipment or IT systems.
+    ],
+    [IEC 60601-1],
+    [
+      General requirements and tests for electromagnetic emissions and electromagnetic immunity of medical electrical equipment.
+    ],
 
+    [COM-2],
+    [
+      The system SHALL comply with relevant veterinary and medical privacy regulations.
+    ],
+    [VMCVM and \ University Policies],
+    [
+      Section 6: policies governed by the VT Vet Med school which include protecting the confidentiality and dignity of veterinary patients.
+    ],
 
-          [*FUN-1* \ Measuring heart rate],
-          [Accurately measuring the heart rate of the foal.],
-          [Single lead ECG placed on the foal.],
-          [Wearable PPG sensor placed near the base of the tail.],
-          [Wearable ECG mounted electrodes.],
+    [COM-3],
+    [
+      The system SHALL have a maximum leakage current for normal and single fault conditions of 100uA and 500uA, respectively.
+    ],
+    [IEC 60601-1],
+    [
+      Clause 8.7.3 specifies the allowable values for leakage currents and patient auxiliary currents under both normal conditions and single fault conditions to protect patients and operators from electrical shock.
+    ],
 
-          [*FUN-3* \ Measuring respiratory rate],
-          [Accurately measuring the respiratory rate of the foal.],
-          [Nasal airflow, temperature sensing, or audio processing.],
-          [Plethysmography via impedance or resistive measurement.],
-          [Ultrasound.],
+  )
 
-          [*FUN-5* \ Abnormal movement \ detection],
-          [Detect concerning behaviors such as rolling on back, front limbs up by the face, +3 standing/lying transitions per hour, and rapid twitching/fasciculations.],
-          [Computer Vision used to detect subtle movement and changes in posture.],
-          [Triaxial accelerometer attached near the tail of the foal to measure orientation and movement.],
-          [Accelerometer + machine learning colic detection used to detect normal and pain-related movement patterns.],
-
-          [*FUN-6* \ Transmitting \ emergency alerts],
-          [Mobile alert sent to nursing staff when monitored biometric parameter(s) goes out of range or abnormal movement detected.],
-          [Internal emergency messaging system (Doc Halo) sends alerts directly to the doctor.],
-          [Sends an SMS/Text message to nursing staff when abnormal activity is detected.],
-          [Through the Website GUI interface, it will have a small alert that would need to be dismissed when an alert goes off.],
-
-          [*ME-3* \ Harness flexibility \ and comfortability],
-          [Device must be flexible, comfortable, and noninvasive for the foals.],
-          [Surcingle.],
-          [Full body suit \ (i.e., "slinky").],
-          [Halter or head \ collar mounted device.],
-
-        )
-      },
-      caption: "Benchmarking information."
-    )
-  ]
 ]
-
 
 #pagebreak()
 
 
 
+
+
 ////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 
 = References
 
-#bibliography("refs.bib", title: none, full: true, style: "ieee")
-
+#bibliography(
+  "refs.bib",
+  title : none,
+  full  : true,
+  style : "ieee",
+)
