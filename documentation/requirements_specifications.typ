@@ -19,7 +19,7 @@
 #show quote.where(block: true): set text(style: "italic")
 #show quote.where(block: true): set block(above: 1em, below: 1em)
 
-#let todo(..args) = {
+#let TODO(..args) = {
   let body = if args.pos().len() >= 1 {
     args.pos().at(0)
   } else {
@@ -122,8 +122,8 @@
     [Phuc Doan         ], [Engineering          ], [1, 3.1, 3.2, 3.3, 4.1, 4.2, 4.3, 4.4], [Sept. 24th, 2026],
     [Kevin Lee         ], [Engineering          ], [5.3], [Sept. 24th, 2026],
     [Diego Penadillo   ], [Engineering          ], [3.2, 5.2], [Sept. 24th, 2026],
-    [Megan Marchitello ], [Customer             ], [N/A], [#todo[]],
-    [Dr. Joe Adams     ], [Mentor               ], [N/A], [#todo[]],
+    [Megan Marchitello ], [Customer             ], [N/A], [#TODO[]],
+    [Dr. Joe Adams     ], [Mentor               ], [N/A], [#TODO[]],
   )
 ]
 
@@ -220,7 +220,7 @@ pertaining to the product.
       table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Description]],
 
 //      [DHF], [
-//        Design History File #todo[Not even used.]
+//        Design History File #TODO[Not even used.]
 //      ],
 
       [IEEE], [
@@ -228,15 +228,15 @@ pertaining to the product.
       ],
 
 //      [CR], [
-//        Customer Requirements #todo[Not even used.]
+//        Customer Requirements #TODO[Not even used.]
 //      ],
 
 //      [SR], [
-//        System Requirements #todo[Not even used.]
+//        System Requirements #TODO[Not even used.]
 //      ],
 //
 //      [BOM], [
-//        Bill of materials #todo[Not even used.]
+//        Bill of materials #TODO[Not even used.]
 //      ],
 
       [ECG], [
@@ -244,7 +244,7 @@ pertaining to the product.
       ],
 
 //      [IMU], [
-//        Intertial measurement unit #todo[Not even used.]
+//        Intertial measurement unit #TODO[Not even used.]
 //      ],
 
       [MCU], [
@@ -252,11 +252,11 @@ pertaining to the product.
       ],
 
 //      [RTM], [
-//        Requirements traceability matrix #todo[Not even used.]
+//        Requirements traceability matrix #TODO[Not even used.]
 //      ],
 
 //      [WBS], [
-//        Work breakdown structure #todo[Not even used.]
+//        Work breakdown structure #TODO[Not even used.]
 //      ],
 
     ),
@@ -551,7 +551,7 @@ so that a system failure/issue is more immediately visible to the staff (system 
 
 
 
-//#todo[
+//#TODO[
 //  Evaluate the external factors listed above as they related to your product/service. This section
 //should be 3-5 paragraphs in length. Describe any lab safety practices that you will follow as well
 //as safety standards in engineering design. Use references to the literature where applicable.
