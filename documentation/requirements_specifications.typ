@@ -33,7 +33,7 @@
     radius: 2pt,
     [
       #if body == none or body == [] [
-        #text(fill: rgb("D32F2F"), weight: "bold")[TODO] 
+        #text(fill: rgb("D32F2F"), weight: "bold")[TODO]
       ] else [
         #text(fill: rgb("D32F2F"), weight: "bold")[TODO: #body]
       ]
@@ -74,7 +74,7 @@
     #table(
       columns : 2,
       stroke  : none,
-      align   : (right, left), 
+      align   : (right, left),
       [*Document Title       *], [Requirements Specifications],
       [*Document \#          *], [RS-01],
       [*Revision \#          *], [1],
@@ -91,13 +91,13 @@
     columns : (auto, auto, auto, auto, auto),
     inset   : 6pt,
     align   : (center + horizon, center + horizon, center + horizon, center + horizon, center + horizon),
-  
+
     table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Rev.]],
     table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Date]],
     table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Detailed Change Description]],
     table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Affected \ Documents]],
     table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Supporting \ Documents]],
-  
+
     [01], [9/23/26], [Initial Release], [N/A], [N/A],
   )
 ]
@@ -110,12 +110,12 @@
     columns : (auto, auto, auto, auto),
     inset   : 6pt,
     align   : (center + horizon, center + horizon, center + horizon, center + horizon),
-  
+
     table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Name]],
     table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Title]],
     table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Contributed \ Sections]],
     table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Signature/Date]],
-  
+
     [Adam Sbahi        ], [Project Lead         ], [4.4, 5.2, 5.3], [Sept. 24th, 2026],
     [Joshua Bryant     ], [Engineering          ], [2.2], [Sept. 24th, 2026],
     [Jerry Cheng       ], [Engineering          ], [5.1, 5.2], [Sept. 24th, 2026],
@@ -179,27 +179,27 @@ pertaining to the product.
       columns : (auto, auto),
       inset   : 6pt,
       align   : (center + horizon, left + horizon),
-    
+
       table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Term]],
       table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Definition]],
-      
+
       [Verification], [
         Confirmation by testing, analysis, demonstration, and/or
         inspection that specified requirements have been fulfilled.
       ],
-  
+
       [Validation], [
         Establishing objective evidence that system specifications
         conform to user needs and intended uses in the operational
         environment.
       ],
-  
+
       [Component], [
         One of the parts that make up a system. A component may
         be hardware or software and may be subdivided into
         components.
       ],
-      
+
     ),
     caption: "Document definitions."
   )
@@ -215,22 +215,22 @@ pertaining to the product.
       columns : (auto, auto),
       inset   : 6pt,
       align   : (center + horizon, left + horizon),
-    
+
       table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Acronym]],
       table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Description]],
-    
+
 //      [DHF], [
 //        Design History File #todo[Not even used.]
 //      ],
-  
+
       [IEEE], [
         Institute of Electrical and Electronics Engineers
       ],
-  
+
 //      [CR], [
 //        Customer Requirements #todo[Not even used.]
 //      ],
-//  
+
 //      [SR], [
 //        System Requirements #todo[Not even used.]
 //      ],
@@ -254,11 +254,11 @@ pertaining to the product.
 //      [RTM], [
 //        Requirements traceability matrix #todo[Not even used.]
 //      ],
-//      
+
 //      [WBS], [
 //        Work breakdown structure #todo[Not even used.]
 //      ],
-      
+
     ),
     caption: "Document acryonyms."
   )
@@ -345,7 +345,7 @@ It's intended for the automated medical system to be initially used on around 1-
       columns : (auto, auto),
       inset   : 6pt,
       align   : (center + horizon, left + horizon),
-    
+
       table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Need]],
       table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Statement]],
 
@@ -365,7 +365,7 @@ It's intended for the automated medical system to be initially used on around 1-
       [Documentation], [
         The product shall be documented with a user guide for the medical and IT staff.
       ],
-      
+
     ),
     caption: "Top-level customer needs."
   )
@@ -544,7 +544,7 @@ that is clear, task-oriented, and accessible to both the medical staff and IT st
 Additionally,
 the device would incorporate on-board self-diagnostics
 (e.g., statuses on power, sensors, network)
-so that a system failure/issue is more immediately visible to the staff (system requirement FUN-8). 
+so that a system failure/issue is more immediately visible to the staff (system requirement FUN-8).
 
 
 
@@ -613,7 +613,7 @@ to ensure any gaps in understanding will always be resolved.
 #quote(block: true, attribution: [IEEE, @ieee2020code])[
   6\. to maintain and improve our technical competence and to undertake
   technological tasks for others only if qualified by training or experience,
-  or after full disclosure of pertinent limitations; 
+  or after full disclosure of pertinent limitations;
 ]
 
 The team can address and handle technical work that is relevant to the members' experiences and skill-sets,
@@ -671,7 +671,7 @@ frequent communication between the team, the stakeholders, and the members there
     The patient's owner
     is a stakeholder
     but not a direct actor in this use case.
-    
+
   ],
   [
     *Preconditions*: \
@@ -682,7 +682,7 @@ frequent communication between the team, the stakeholders, and the members there
     is available to attach and set up the device.
     The hospital's Wi-Fi network
     covers the patient's stall.
-    
+
   ],
   [
         *Trigger*:\
@@ -699,7 +699,7 @@ frequent communication between the team, the stakeholders, and the members there
     The nurse is still capable of carrying out other medical routines
     without being interfered by the device
     (e.g., still able to place a stethoscope underneath the harness for auscultation).
-    
+
     The device powers on and begins acquiring vitals;
     on-board indicators confirm
     that power, sensors,
@@ -708,7 +708,7 @@ frequent communication between the team, the stakeholders, and the members there
     to the desktop application in real time.
     The system continuously monitors
     for any abnormalities.
-    
+
     When an irregularity is detected,
     the system alerts the on-duty nursing staff.
     The nurse verifies the event and,
@@ -788,7 +788,7 @@ frequent communication between the team, the stakeholders, and the members there
     have been assessed and resolved.
     The alert log in the desktop application
     reflects all events and their dispositions.
-    
+
     On failure,
     the patient continues to receive care
     through the existing manual monitoring process;
@@ -830,7 +830,7 @@ frequent communication between the team, the stakeholders, and the members there
   #show figure: set block(breakable: true)
 #page(flipped: true)[
   = Product Requirements
-  
+
   == System Requirements
   #align(center)[
     #figure(
@@ -916,56 +916,56 @@ Assumptions made for @target-specifications:
           columns : (3em, 10em, 8em, auto, auto, 21em),
           inset   : 6pt,
           align   : (center + horizon, center + horizon, center + horizon, center + horizon, center + horizon, center + horizon),
-        
+
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Req \ ID]],
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Metric]],
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Units]],
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Marginal \ Value]],
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Target (Ideal) \ Value]],
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Traceability / Rationale]],
-    
+
           [PER-1],
           [Heart rate monitoring accuracy compared to a commercial heart rate sensor.],
           [BPM],
           [#sym.plus.minus;5 BPM],
           [#sym.plus.minus;2 BPM],
           [Detect abnormal heart rate as a metric to alert medical staff. Device must be able to reliably send alerts.],
-  
+
           [PER-2],
           [Respiratory rate monitoring accuracy compared to a commercial device.],
           [Breaths per Minute (BrPM)],
           [#sym.plus.minus;5 BrPM],
           [#sym.plus.minus;2 BrPM],
           [Detect abnormal breathing as a metric to alert medical staff. Device must be able to reliably send alerts.],
-  
+
           [PER-3],
           [Detection of roll-onto-back events accuracy.],
           [Roll Angle (Degrees)],
           [0#sym.degree - 45#sym.degree \ 70#sym.degree - 110#sym.degree],
           [120#sym.degree - 145#sym.degree],
           [Measure the total degrees turned and if its standing (0#sym.degree - 45#sym.degree) or is in lateral recumbency (70#sym.degree - 110#sym.degree) have that be acceptable. If it gets it (150#sym.degree - 180#sym.degree) then trigger and send an alert. ],
-  
+
           [PER-4],
           [Detection of abnormal front leg behavior accuracy.],
           [N/A],
           [80%],
           [90%],
           [One of the foal's signs of distress is rubbing their face with their front legs. Device must be able to reliably detect this front leg behavior.],
-  
+
           [PER-5],
           [Detection of standing to lying and lying to standing transitions accuracy.],
           [N/A],
           [80%],
           [90%],
           [Detect how many times the horses stand within a given hour. According to the client, if a foal stands more than three times within the hour, it means there is discomfort and attention is needed.],
-  
+
           [PER-6],
           [Transmitting an emergency alert in a timely manner.],
           [Seconds],
           [90s],
           [60s],
           [Detect abnormal foal conditions and send a signal to alert medical staff in a timely manner.],
-  
+
           [POW-1],
           [Battery life per usage.],
           [Time],
@@ -981,7 +981,7 @@ Assumptions made for @target-specifications:
 
 
 #page(flipped: true)[
-  
+
   #align(center)[
     #figure(
       {
@@ -990,38 +990,38 @@ Assumptions made for @target-specifications:
           columns : (4em, auto, 10em, auto),
           inset   : 6pt,
           align   : (center + horizon, center + horizon, center + horizon, center + horizon),
-        
+
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Req. \#]],
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Requirement]],
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Source Document]],
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Details]],
-    
+
           [COM-1],
           [The system SHALL not create electromagnetic interference with other medical equipment or IT systems.],
           [IEC 60601-1],
           [General requirements and tests for electromagnetic emissions and electromagnetic immunity of medical electrical equipment.],
-          
+
           [COM-2],
           [The system SHALL comply with relevant veterinary and medical privacy regulations.],
           [VMCVM and \ University Policies],
           [Section 6: policies governed by the VT Vet Med school which include protecting the confidentiality and dignity of veterinary patients.],
-          
+
           [COM-3],
           [The system SHALL have a maximum leakage current for normal and single fault conditions of 100uA and 500uA, respectively.],
           [IEC 60601-1],
           [Clause 8.7.3 specifies the allowable values for leakage currents and patient auxiliary currents under both normal conditions and single fault conditions to protect patients and operators from electrical shock.],
-          
+
         )
       },
       caption: "Standards and statutory requirements."
     )
   ]
-]  
+]
 
 
 #page(flipped: true)[
   == Benchmarking Information
-  
+
   #align(center)[
     #figure(
       {
@@ -1030,45 +1030,45 @@ Assumptions made for @target-specifications:
           columns : (auto, auto, auto, auto, auto),
           inset   : 6pt,
           align   : (center + horizon, center + horizon, center + horizon, center + horizon),
-        
+
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Feature / Requirement]],
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Target Requirement]],
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Existing Alternative \#1]],
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Existing Alternative \#2]],
           table.cell(fill: maroon)[#text(fill: white, weight: "bold")[Existing Alternative \#3]],
-    
-  
-  
+
+
+
           [*FUN-1* \ Measuring heart rate],
           [Accurately measuring the heart rate of the foal.],
           [Single lead ECG placed on the foal.],
           [Wearable PPG sensor placed near the base of the tail.],
           [Wearable ECG mounted electrodes.],
-  
-          [*FUN-3* \ Measuring respiratory rate], 
+
+          [*FUN-3* \ Measuring respiratory rate],
           [Accurately measuring the respiratory rate of the foal.],
           [Nasal airflow, temperature sensing, or audio processing.],
           [Plethysmography via impedance or resistive measurement.],
           [Ultrasound.],
-  
+
           [*FUN-5* \ Abnormal movement \ detection],
           [Detect concerning behaviors such as rolling on back, front limbs up by the face, +3 standing/lying transitions per hour, and rapid twitching/fasciculations.],
           [Computer Vision used to detect subtle movement and changes in posture.],
           [Triaxial accelerometer attached near the tail of the foal to measure orientation and movement.],
           [Accelerometer + machine learning colic detection used to detect normal and pain-related movement patterns.],
-          
-          [*FUN-6* \ Transmitting \ emergency alerts], 
+
+          [*FUN-6* \ Transmitting \ emergency alerts],
           [Mobile alert sent to nursing staff when monitored biometric parameter(s) goes out of range or abnormal movement detected.],
           [Internal emergency messaging system (Doc Halo) sends alerts directly to the doctor.],
           [Sends an SMS/Text message to nursing staff when abnormal activity is detected.],
           [Through the Website GUI interface, it will have a small alert that would need to be dismissed when an alert goes off.],
-          
+
           [*ME-3* \ Harness flexibility \ and comfortability],
           [Device must be flexible, comfortable, and noninvasive for the foals.],
           [Surcingle.],
           [Full body suit \ (i.e., "slinky").],
           [Halter or head \ collar mounted device.],
-          
+
         )
       },
       caption: "Benchmarking information."
