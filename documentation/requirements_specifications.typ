@@ -230,14 +230,14 @@
   title        : [DOCUMENT REVIEW AND APPROVAL],
   columns      : (auto  , auto   , auto                  , auto            ),
   headers      : ([Name], [Title], [Contributed Sections], [Signature/Date]),
-  [Adam Sbahi       ], [Project Lead], [4.4, 5.2, 5.3                       ], [Sept. 24th, 2026],
-  [Joshua Bryant    ], [Engineering ], [2.2                                 ], [Sept. 24th, 2026],
-  [Jerry Cheng      ], [Engineering ], [5.1, 5.2                            ], [Sept. 24th, 2026],
-  [Phuc Doan        ], [Engineering ], [1, 3.1, 3.2, 3.3, 4.1, 4.2, 4.3, 4.4], [Sept. 24th, 2026],
-  [Kevin Lee        ], [Engineering ], [5.3                                 ], [Sept. 24th, 2026],
-  [Diego Penadillo  ], [Engineering ], [3.2, 5.2                            ], [Sept. 24th, 2026],
-  [Megan Marchitello], [Customer    ], [N/A                                 ], [#TODO[]         ],
-  [Dr. Joe Adams    ], [Mentor      ], [N/A                                 ], [#TODO[]         ],
+  [Adam Sbahi           ], [Project Lead], [4.4, 5.2, 5.3                       ], [Sept. 24th, 2026],
+  [Joshua Bryant        ], [Engineering ], [2.2                                 ], [Sept. 24th, 2026],
+  [Jerry Cheng          ], [Engineering ], [5.1, 5.2                            ], [Sept. 24th, 2026],
+  [Phuc Doan            ], [Engineering ], [1, 3.1, 3.2, 3.3, 4.1, 4.2, 4.3, 4.4], [Sept. 24th, 2026],
+  [Kevin Lee            ], [Engineering ], [5.3                                 ], [Sept. 24th, 2026],
+  [Diego Penadillo      ], [Engineering ], [3.2, 5.2                            ], [Sept. 24th, 2026],
+  [Dr. Megan Marchitello], [Customer    ], [N/A                                 ], [#TODO[]         ],
+  [Dr. Joe Adams        ], [Mentor      ], [N/A                                 ], [#TODO[]         ],
 )
 
 #pagebreak()
