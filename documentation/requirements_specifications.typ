@@ -237,6 +237,7 @@
   [Kevin Lee            ], [Engineering ], [5.3                                 ], [Sept. 24th, 2026],
   [Diego Penadillo      ], [Engineering ], [3.2, 5.2                            ], [Sept. 24th, 2026],
   [Dr. Megan Marchitello], [Customer    ], [N/A                                 ], [#TODO[]         ],
+  [Patrick Wolak        ], [Customer    ], [N/A                                 ], [#TODO[]         ],
   [Dr. Joe Adams        ], [Mentor      ], [N/A                                 ], [#TODO[]         ],
 )
 
