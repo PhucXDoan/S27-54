@@ -446,6 +446,10 @@ It's intended for the automated medical system to be initially used on around 1-
     System shall monitor vitals without staff intervention.
   ],
   [Non-invasive], [
+    Device shall not break the skin, enter through a surgical incision,
+    or otherwise physically penetrate the body or its internal cavities.
+  ],
+  [Adjustable], [
     System shall not restrict foal movement or cause distress.
   ],
   [Timely alerts], [
