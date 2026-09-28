@@ -3,7 +3,7 @@
 Documentation and their media is stored in `./documentation/`.
 We use Typst for typesetting.
 
-Opening Windows Terminal
+Open Windows Terminal
 and download the `typst` command-line interface:
 ```
 $ winget install typst
