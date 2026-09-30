@@ -417,7 +417,7 @@ and be able to send alerts in situations that require the medical staff's attent
 The automated medical system will be attached to the patient in a non-invasive manner.
 The mounting of the device is designed in such a way that it minimizes additional risk to the patient
 (e.g., getting tangled)
-and minimizes discomfort by being adjustable to both foals and mares.
+and minimizes discomfort by being adjustable for both foals and mares.
 The device, by default,
 will incorporate a heart rate sensor,
 an ECG sensor,
@@ -427,8 +427,8 @@ and a movement sensor.
 For flexibility,
 not all sensors are required for functionality of the automated medical system
 and can be disconnected from the overall system.
-This is to support situations where the mounting of a particular sensor
-may be infeasible for a particular patient.
+This is to support situations where mounting a particular sensor
+may be infeasible for a given patient.
 
 #standard-image(
   caption : [Top-level system diagram.],
@@ -470,7 +470,7 @@ The system is intended for initial use on 1-3 patients at a time.
     Device shall not break the skin, enter through a surgical incision,
     or otherwise physically penetrate the body or its internal cavities.
   ],
-  [Adjustable], [
+  [Non-restrictive], [
     System shall not restrict foal movement or cause distress.
   ],
   [Timely alerts], [
@@ -579,8 +579,8 @@ veterinary center.
 The mechanical demands are also substantial.
 A newborn foal can weigh 70 kg (154 lb)
 and a mare 530 kg (1,168 lb) on the high end@HEIDLER2004883.
-The patient can move, roll, and shift position,
-especially frequently if they're uncomfortable.
+The patient can move, roll, and shift position frequently,
+especially if they're uncomfortable.
 In this way, the harness and device must withstand
 repeated flexing, impact, and vibration
 while maintaining sensor accuracy.
@@ -609,7 +609,9 @@ the existing patient care routine.
 The device must therefore be unobtrusive,
 easy to attach and remove,
 and reliable enough to earn sustained trust
-without introducing issues such as alarm fatigue. System requirements ME-2 and ME-5 addresses these constraints, by requiring the product to minimize interference with the medical staff’s existing workflow and allow battery replacement to be performed by personnel with limited technical knowledge of the system.
+without introducing issues such as alarm fatigue. System requirements ME-2 and ME-5 address these constraints,
+by requiring the product to minimize interference with the medical staff’s existing workflow
+and allow battery replacement to be performed by personnel with limited technical knowledge of the system.
 
 
 
@@ -631,7 +633,7 @@ Above all other constraints, the safety and welfare of the patient is the main p
 This factor then implies additional requirements
 such as the materials in contact with the animal being safe, non-irritating,
 and not posing additional risks.
-System requirement ME-3 account for these concerns, which require the harness and product to minimize risk of mechanical hazards including cuts by sharp edges or entanglement.
+System requirement ME-3 accounts for these concerns, which require the harness and product to minimize risk of mechanical hazards including cuts by sharp edges or entanglement.
 Overall, for the automated medical device to be effective,
 the patient's unique attributes must be taken into account
 and result in a product design that is adjustable.
@@ -658,11 +660,11 @@ because a device that is difficult to use or understand
 will either be underutilized or cause the staff to struggle to interpret its output,
 both of which degrade patient safety.
 To minimize the burden,
-the product would be accompanied with a user guide
+the product will be accompanied by a user guide
 that is clear, task-oriented, and accessible to both the medical staff and IT staff.
 Additionally,
 the device will incorporate on-board self-diagnostics
-(e.g., statuses for power, sensors, network)
+(e.g., status indicators for power, sensors, network)
 so that a system failure/issue is more immediately visible to the staff (system requirement FUN-8).
 
 
@@ -907,7 +909,7 @@ frequent communication between the team, the stakeholders, and the members there
         A single harness can be designed to be adjustable
         for both a foal and a mare patient,
         but multiple variations of harnesses
-        can also be designed if it is more practical this way.
+        can also be designed if that is more practical.
         In this case,
         the electronics can be transferred and reused between harnesses.
       ],
@@ -972,7 +974,7 @@ frequent communication between the team, the stakeholders, and the members there
     ], [DEMONSTRATION],
 
     [FUN-8], [2], [
-      The system SHOULD include on-board self-diagnostics that display the status the statuses of power, sensors, and network.
+      The system SHOULD include on-board self-diagnostics that display the status of power, sensors, and network.
     ], [INSPECTION],
 
     [PER-1], [2], [
@@ -992,7 +994,7 @@ frequent communication between the team, the stakeholders, and the members there
     ], [TEST],
 
     [PER-5], [1], [
-      The movement monitoring system SHALL detect laying/standing transitions with at least 90% agreement compared to manual observation.
+      The movement monitoring system SHALL detect lying/standing transitions with at least 90% agreement compared to manual observation.
     ], [TEST],
 
     [PER-6], [1], [
@@ -1043,23 +1045,23 @@ frequent communication between the team, the stakeholders, and the members there
       The system SHOULD display the remaining battery time on the GUI.
     ], [TEST],
 
-    [ME-1 ], [1], [
+    [ME-1], [1], [
       The product and harness SHALL minimize risk of mechanical hazards including cuts by sharp surfaces and entanglement.
     ], [INSPECTION],
 
-    [ME-2 ], [2], [
+    [ME-2], [2], [
       Battery swap SHOULD be able to be performed by personnel with limited technical knowledge of the system.
     ], [DEMONSTRATION],
 
-    [ME-3 ], [1], [
+    [ME-3], [1], [
       The harness SHALL be adjustable and flexible to accommodate varying foal sizes without restricting normal movement or causing discomfort.
     ], [DEMONSTRATION],
 
-    [ME-4 ], [1], [
+    [ME-4], [1], [
       The harness SHALL NOT place excessive pressure onto the foals.
     ], [DEMONSTRATION],
 
-    [ME-5 ], [2], [
+    [ME-5], [2], [
       The product SHOULD minimize interference to existing workflow of medical staff.
     ], [DEMONSTRATION],
 
@@ -1068,7 +1070,7 @@ frequent communication between the team, the stakeholders, and the members there
     ], [TEST],
 
     [I/O-2], [2], [
-      The medical system SHOULD still be functional without the EKG monitor.
+      The medical system SHOULD still be functional without the ECG monitor.
     ], [TEST],
 
     [I/O-3], [2], [
@@ -1179,7 +1181,8 @@ Assumptions made for @target-specifications:
       120#sym.degree - 145#sym.degree
     ],
     [
-      Measure the total degrees turned and if its standing (0#sym.degree - 45#sym.degree) or is in lateral recumbency (70#sym.degree - 110#sym.degree) have that be acceptable. If it gets it (150#sym.degree - 180#sym.degree) then trigger and send an alert. 
+      Measure the total degrees turned, if it's standing (0#sym.degree - 45#sym.degree), and if it's in lateral recumbency (70#sym.degree - 110#sym.degree).
+      If abnormal (150#sym.degree - 180#sym.degree), trigger and send an alert.
     ],
 
     [PER-4],
@@ -1213,7 +1216,9 @@ Assumptions made for @target-specifications:
       90%
     ],
     [
-      Detect how many times the horses stand within a given hour. According to the client, if a foal stands more than three times within the hour, it means there is discomfort and attention is needed.
+      Detect how many times the horses stand within a given hour.
+      A foal standing more than three times within the hour
+      indicates discomfort and attention is needed.
     ],
 
     [PER-6],
@@ -1351,7 +1356,7 @@ Assumptions made for @target-specifications:
       Detect concerning behaviors such as rolling on back, front limbs up by the face, +3 standing/lying transitions per hour, and rapid twitching/fasciculations.
     ],
     [
-      Computer Vision used to detect subtle movement and changes in posture.
+      Computer vision used to detect subtle movement and changes in posture.
     ],
     [
       Triaxial accelerometer attached near the tail of the foal to measure orientation and movement.
@@ -1371,10 +1376,10 @@ Assumptions made for @target-specifications:
       Internal emergency messaging system (Doc Halo) sends alerts directly to the doctor.
     ],
     [
-      Sends an SMS/Text message to nursing staff when abnormal activity is detected.
+      Sends an SMS to nursing staff when abnormal activity is detected.
     ],
     [
-      Through the Website GUI interface, it will have a small alert that would need to be dismissed when an alert goes off.
+      A GUI-based alert will have a small alert that would need to be dismissed.
     ],
 
     [
@@ -1388,7 +1393,7 @@ Assumptions made for @target-specifications:
       Surcingle.
     ],
     [
-      Full body suit \ (i.e., "slinky").
+      Full-body suit \ (i.e., "slinky").
     ],
     [
       Halter or head \ collar mounted device.
