@@ -230,14 +230,15 @@
   title        : [DOCUMENT REVIEW AND APPROVAL],
   columns      : (auto  , auto   , auto                  , auto            ),
   headers      : ([Name], [Title], [Contributed Sections], [Signature/Date]),
-  [Adam Sbahi       ], [Project Lead], [4.4, 5.2, 5.3                       ], [Sept. 24th, 2026],
-  [Joshua Bryant    ], [Engineering ], [2.2                                 ], [Sept. 24th, 2026],
-  [Jerry Cheng      ], [Engineering ], [5.1, 5.2                            ], [Sept. 24th, 2026],
-  [Phuc Doan        ], [Engineering ], [1, 3.1, 3.2, 3.3, 4.1, 4.2, 4.3, 4.4], [Sept. 24th, 2026],
-  [Kevin Lee        ], [Engineering ], [5.3                                 ], [Sept. 24th, 2026],
-  [Diego Penadillo  ], [Engineering ], [3.2, 5.2                            ], [Sept. 24th, 2026],
-  [Megan Marchitello], [Customer    ], [N/A                                 ], [#TODO[]         ],
-  [Dr. Joe Adams    ], [Mentor      ], [N/A                                 ], [#TODO[]         ],
+  [Adam Sbahi           ], [Project Lead], [4.4, 5.2, 5.3                       ], [Sept. 24th, 2026],
+  [Joshua Bryant        ], [Engineering ], [2.2                                 ], [Sept. 24th, 2026],
+  [Jerry Cheng          ], [Engineering ], [5.1, 5.2                            ], [Sept. 24th, 2026],
+  [Phuc Doan            ], [Engineering ], [1, 3.1, 3.2, 3.3, 4.1, 4.2, 4.3, 4.4], [Sept. 24th, 2026],
+  [Kevin Lee            ], [Engineering ], [5.3                                 ], [Sept. 24th, 2026],
+  [Diego Penadillo      ], [Engineering ], [3.2, 5.2                            ], [Sept. 24th, 2026],
+  [Dr. Megan Marchitello], [Customer    ], [N/A                                 ], [#TODO[]         ],
+  [Patrick Wolak        ], [Customer    ], [N/A                                 ], [#TODO[]         ],
+  [Dr. Joe Adams        ], [Mentor      ], [N/A                                 ], [#TODO[]         ],
 )
 
 #pagebreak()
@@ -446,6 +447,10 @@ It's intended for the automated medical system to be initially used on around 1-
     System shall monitor vitals without staff intervention.
   ],
   [Non-invasive], [
+    Device shall not break the skin, enter through a surgical incision,
+    or otherwise physically penetrate the body or its internal cavities.
+  ],
+  [Adjustable], [
     System shall not restrict foal movement or cause distress.
   ],
   [Timely alerts], [
