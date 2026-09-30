@@ -2,7 +2,7 @@
 
 I recommend using a Git GUI.
 The one I use is SmartGit ([download link](https://download.smartgit.dev/smartgit/smartgit-26_1_056-win-installer.zip)).
-I've written a tutorial guide a while back;
+I've written a tutorial a while back ([guide link](https://github.com/RockSat-X/RSXVT2026/wiki/Onboarding-the-Git-Workflow));
 it's slightly out-dated but I suggest referencing it nonetheless.
 I do not recommend using GitHub Desktop.
 
