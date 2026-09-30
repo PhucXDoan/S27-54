@@ -235,6 +235,7 @@
   [02], [#TODO[]], [
     Expand top-level customer needs table. \
     Expand document review and approval table. \
+    Grammatical changes. \
   ], [
     #TODO[]
   ], [
@@ -407,7 +408,7 @@ across 2-3 simultaneous patients on routine care
 costs the staff great time and effort.
 Thus, an electronically automated solution is needed where
 continuous, non-invasive monitoring can take place
-and be able to send alerts in situations that requires the medical staff's attention.
+and be able to send alerts in situations that require the medical staff's attention.
 
 
 
@@ -416,7 +417,7 @@ and be able to send alerts in situations that requires the medical staff's atten
 The automated medical system will be attached to the patient in a non-invasive manner.
 The mounting of the device is designed in such a way that it minimizes additional risk to the patient
 (e.g., getting tangled)
-and minimizes discomfort (i.e., can be adjusted to foals and mares).
+and minimizes discomfort by being adjustable to both foals and mares.
 The device, by default,
 will incorporate a heart rate sensor,
 an ECG sensor,
@@ -438,8 +439,8 @@ The sensors monitor the corresponding vitals of the patient
 and send the data to the main MCU by wire.
 The main MCU processes the data for any abnormalities,
 such as the heart rate BPM being out of the configured nominal window.
-The main MCU transmits telemetry via Wi-Fi,
-to which the data can be viewed on a desktop application.
+The main MCU transmits telemetry via Wi-Fi to a desktop application,
+where the data can be viewed in real-time.
 The desktop application can display real-time vitals of the patient
 or patients if multiple devices are used.
 The desktop application will be responsible for sending alerts to all subscribed staff
@@ -453,7 +454,7 @@ The battery system is the component that powers the automated medical system
 and will be routinely recharged by the medical staff.
 The automated medical system will incorporate diagnostics (e.g., LEDs, buzzers)
 to indicate the working condition of the device.
-It's intended for the automated medical system to be initially used on around 1-3 patients at a time.
+The system is intended for initial use on 1-3 patients at a time.
 
 #standard-table(
 
@@ -511,7 +512,7 @@ It's intended for the automated medical system to be initially used on around 1-
     It is expected that the device will actually save time and effort in providing the care
     and is preferable to use rather than not.
     Aspects affecting the usability of the product
-    includes the quality of documentation (e.g., user guide),
+    include the quality of documentation (e.g., user guide),
     effort of maintenance (e.g., replacing batteries),
     and ease of use (e.g., getting alerted).
     This stakeholder's primary assets are time, effort, and quality of care.
@@ -525,16 +526,16 @@ It's intended for the automated medical system to be initially used on around 1-
     will be used on patients under the care of the hospital.
     By the act of using it,
     the medical center's reputation is tied to the reliability of the product
-    and is liable to any shortcomings that the product may have.
-    This stakeholder's primary assets is the patient and reputation.
+    and is liable for any shortcomings that the product may have.
+    This stakeholder's primary assets are the patient and reputation.
   ],
   [
     _*Equine Patient's Owner*_
 
     The equine patient is ultimately the property of the owner.
     It is in their best interest that the product is safe and secure.
-    Safe meaning that the device does not further complicate the care of the patient,
-    and secure in that the telemetry collected is entirely confidential between
+    Safe, meaning that the device does not further complicate the care of the patient,
+    and secure, in that the telemetry collected is entirely confidential between
     the owner and the medical center.
     This stakeholder's primary asset is the patient.
   ],
@@ -577,7 +578,7 @@ veterinary center.
 
 The mechanical demands are also substantial.
 A newborn foal can weigh 70 kg (154 lb)
-and a mare 530 kg (1,168 lb) on the high-end@HEIDLER2004883.
+and a mare 530 kg (1,168 lb) on the high end@HEIDLER2004883.
 The patient can move, roll, and shift position,
 especially frequently if they're uncomfortable.
 In this way, the harness and device must withstand
@@ -593,7 +594,7 @@ The product design must also take into account
 the hospital's existing infrastructure, culture, and workflow.
 In particular,
 the nursing staff need to be able to manually assess the patient's vitals
-and upkeep patient care equipment
+and maintain patient care equipment
 (e.g., provide milk through feeding tube, empty urine bags).
 The regular routine of the nursing staff
 can be incorporated into the product's design
@@ -628,8 +629,8 @@ and in the case of foals,
 often express pain and distress differently from adult horses.
 Above all other constraints, the safety and welfare of the patient is the main priority.
 This factor then implies additional requirements
-such the materials in contact with the animal being safe, non-irritating,
-and not pose additional risks.
+such as the materials in contact with the animal being safe, non-irritating,
+and not posing additional risks.
 System requirement ME-3 account for these concerns, which require the harness and product to minimize risk of mechanical hazards including cuts by sharp edges or entanglement.
 Overall, for the automated medical device to be effective,
 the patient's unique attributes must be taken into account
@@ -643,7 +644,7 @@ would lead to alarm fatigue
 and thus desensitize staff to genuine alerts.
 Conversely,
 inaction to alert on legitimate issues
-would be a failure in reducing the time and effort spent
+will be a failure in reducing the time and effort spent
 on patient care on the medical staff's behalf.
 These factors further call for a product design
 that can be adapted and configured for each patient's condition
@@ -660,8 +661,8 @@ To minimize the burden,
 the product would be accompanied with a user guide
 that is clear, task-oriented, and accessible to both the medical staff and IT staff.
 Additionally,
-the device would incorporate on-board self-diagnostics
-(e.g., statuses on power, sensors, network)
+the device will incorporate on-board self-diagnostics
+(e.g., statuses for power, sensors, network)
 so that a system failure/issue is more immediately visible to the staff (system requirement FUN-8).
 
 
@@ -694,7 +695,7 @@ Any known shortcomings in the product design or implementation will be communica
   properly the contributions of others;
 ]
 
-The team seek to validate designs that
+The team seeks to validate designs that
 will align with this requirements specification document,
 both ethically and functionally.
 This is achieved by upholding transparent communication with stakeholders
@@ -759,7 +760,7 @@ frequent communication between the team, the stakeholders, and the members there
     The patient, typically a foal or a mare, is the secondary actor.
     The on-call physician
     is a secondary actor
-    who can potentially receives escalated alerts
+    who can potentially receive escalated alerts
     via the hospital's messaging system.
     The patient's owner
     is a stakeholder
@@ -786,11 +787,11 @@ frequent communication between the team, the stakeholders, and the members there
   [
     *Main Success Scenario (Normal Flow)*:\
     The technician attaches the sensor harness to the patient.
-    The harness is adjustable to smaller profile of a foal
+    The harness is adjustable to the smaller profile of a foal
     or to the larger girth of a mare,
     depending on the patient.
     The nurse is still capable of carrying out other medical routines
-    without being interfered by the device
+    without interference from the device
     (e.g., still able to place a stethoscope underneath the harness for auscultation).
 
     The device powers on and begins acquiring vitals;
@@ -819,7 +820,7 @@ frequent communication between the team, the stakeholders, and the members there
       spacing : 1em,
       [
         _Battery depletion._\
-        The device alerts staff on low battery.
+        The device alerts staff of low battery.
         The nurse swaps or recharges the battery
         during a routine stall entry.
         Monitoring resumes.
@@ -897,7 +898,7 @@ frequent communication between the team, the stakeholders, and the members there
         for a minimum 24-hour operating life.
         The device's battery is replaced or recharged daily
         by the nursing staff as part of routine care.
-        The battery form factor will the same as one can find off-the-shelf
+        The battery form factor will be the same as found off-the-shelf
         (e.g., AAA, 9V, etc.);
         whether or not the batteries themselves
         are rechargeable is up to the medical staff.
