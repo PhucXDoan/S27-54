@@ -1300,6 +1300,106 @@ Assumptions made for @target-specifications:
 
 
 
+#page(flipped: true)[
+
+  == Benchmarking Information
+
+  #standard-table(
+
+    caption   : [Benchmarking information.],
+    breakable : false,
+    size      : 0.9em,
+    columns   : (auto                   , auto                , auto                      , auto                      , auto                      ),
+    align     : (center + horizon       , center + horizon    , center + horizon          , center + horizon          , center + horizon          ),
+    headers   : ([Feature / Requirement], [Target Requirement], [Existing Alternative \#1], [Existing Alternative \#2], [Existing Alternative \#3]),
+
+    [
+      *FUN-1* \
+      Measuring heart rate
+    ], [
+      Accurately measuring the heart rate of the foal.
+    ], [
+      Single lead ECG placed on the foal.
+    ], [
+      Wearable PPG sensor placed near the base of the tail.
+    ], [
+      Wearable ECG mounted electrodes.
+    ],
+
+    [
+      *FUN-3* \
+      Measuring respiratory rate
+    ],
+    [
+      Accurately measuring the respiratory rate of the foal.
+    ],
+    [
+      Nasal airflow, temperature sensing, or audio processing.
+    ],
+    [
+      Plethysmography via impedance or resistive measurement.
+    ],
+    [
+      Ultrasound.
+    ],
+
+    [
+      *FUN-5* \
+      Abnormal movement \ detection
+    ],
+    [
+      Detect concerning behaviors such as rolling on back, front limbs up by the face, +3 standing/lying transitions per hour, and rapid twitching/fasciculations.
+    ],
+    [
+      Computer Vision used to detect subtle movement and changes in posture.
+    ],
+    [
+      Triaxial accelerometer attached near the tail of the foal to measure orientation and movement.
+    ],
+    [
+      Accelerometer + machine learning colic detection used to detect normal and pain-related movement patterns.
+    ],
+
+    [
+      *FUN-6* \
+      Transmitting \ emergency alerts
+    ],
+    [
+      Mobile alert sent to nursing staff when monitored biometric parameter(s) goes out of range or abnormal movement detected.
+    ],
+    [
+      Internal emergency messaging system (Doc Halo) sends alerts directly to the doctor.
+    ],
+    [
+      Sends an SMS/Text message to nursing staff when abnormal activity is detected.
+    ],
+    [
+      Through the Website GUI interface, it will have a small alert that would need to be dismissed when an alert goes off.
+    ],
+
+    [
+      *ME-3* \
+      Harness flexibility \ and comfortability
+    ],
+    [
+      Device must be flexible, comfortable, and noninvasive for the foals.
+    ],
+    [
+      Surcingle.
+    ],
+    [
+      Full body suit \ (i.e., "slinky").
+    ],
+    [
+      Halter or head \ collar mounted device.
+    ],
+
+  )
+
+]
+
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
