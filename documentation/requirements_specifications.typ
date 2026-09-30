@@ -209,19 +209,38 @@
     stroke    : none,
     align     : (right, left),
     [*Document Title       *], [Requirements Specifications],
-    [*Document \#          *], [RS-01                      ],
-    [*Revision \#          *], [1                          ],
-    [*Previous Doc/Rev \#  *], [N/A                        ],
+    [*Document \#          *], [RS-#TODO[2]                ],
+    [*Revision \#          *], [#TODO[2]                   ],
+    [*Previous Doc/Rev \#  *], [1                          ],
   )
 ]
 
 #v(2em)
 
 #standard-table(
-  title        : [CHANGE HISTORY],
-  columns      : (auto  , auto  , auto                         , auto                  , auto                    ),
-  headers      : ([Rev.], [Date], [Detailed Change Description], [Affected \ Documents], [Supporting \ Documents]),
-  [01], [9/23/26], [Initial Release], [N/A], [N/A],
+
+  title   : [CHANGE HISTORY],
+  size    : 0.8em,
+  columns : (auto  , auto  , auto                         , auto                  , auto                    ),
+  headers : ([Rev.], [Date], [Detailed Change Description], [Affected \ Documents], [Supporting \ Documents]),
+
+  [01], [Sept. 23rd, 2026], [
+    Initial Release
+  ], [
+    N/A
+  ], [
+    N/A
+  ],
+
+  [02], [#TODO[]], [
+    Expand top-level customer needs table. \
+    Expand document review and approval table. \
+  ], [
+    #TODO[]
+  ], [
+    #TODO[]
+  ],
+
 )
 
 #v(2em)
