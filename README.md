@@ -1,3 +1,19 @@
+# Using Git.
+
+I recommend using a Git GUI.
+The one I use is SmartGit ([download link](https://download.smartgit.dev/smartgit/smartgit-26_1_056-win-installer.zip)).
+I've written a tutorial guide a while back;
+it's slightly out-dated but I suggest referencing it nonetheless.
+I do not recommend using GitHub Desktop.
+
+<p align="center"><kbd><img src="./misc/smartgit.png" width="600px"></kbd></p>&nbsp;
+
+There is a GitHub branch rule applied to `main`.
+No one can directly push changes to `main`.
+All commits must be merged into `main` through a pull-request.
+
+
+
 # Documentation.
 
 Documentation and their media is stored in `./documentation/`.
