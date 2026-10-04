@@ -28,7 +28,7 @@ Power	POW-1	1	The system SHALL sustain on battery power for at least 1 day.	v1		
 	POW-2	2	The system SHALL alert staff on low battery power.	v1		TEST		
 	POW-3	3	The system SHOULD show the battery level on the GUI	v1		TEST		
 	POW-4	3	The system SHOULD display the remaining battery time on the GUI	v1		TEST		
-	ME-1	1	The product and harness SHALL minimize risk of mechanical hazards including cuts by sharp surfaces and entanglement 	v1		INSPECTION		
+Mechanical	ME-1	1	The product and harness SHALL minimize risk of mechanical hazards including cuts by sharp surfaces and entanglement 	v1		INSPECTION		
 	ME-2	2	Battery swap SHOULD be able to be performed by personel with limited technical knowledge of the system.	v1		DEMONSTRATION		
 	ME-3	1	The harness SHALL be adjustable and flexible to accomodate varying foal sizes without restricting normal movement or causing discomfort	v1		DEMONSTRATION		
 	ME-4 	1	The harness SHALL NOT place excessive pressure onto the foals	v1		DEMONSTRATION		
