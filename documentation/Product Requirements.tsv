@@ -11,6 +11,7 @@ Functional	FUN-1	1	The system SHALL monitor heart rate.	v1		DEMONSTRATION
 	FUN-6	1	The system SHALL notify relevant medical staff of warnings and errors.	v1		DEMONSTRATION		
 	FUN-7	1	The system SHALL be compatible with existing medical intranet systems.	v1		DEMONSTRATION		
 	FUN-8	2	The system SHOULD include on-board self-diagnostics that display the status of power, sensors, and network.	v1		INSPECTION		
+	FUN-9	2	The product SHOULD minimize interference to existing workflow of medical staff.	v2		DEMONSTRATION		
 Performance	PER-1	2	The heart rate monitoring SHALL be within +/- 2 BPM compared to a commercial heart rate monitor product.	v1		TEST		
 	PER-2	2	The respiratory rate monitoring SHALL be within +/- 2 BrPM (breaths per min) compared to a commercial respiratory rate monitor.	v1		TEST		
 	PER-3	1	The movement monitoring system SHALL detect roll-onto-back events with at least 90% agreement compared to manual observation.	v1		TEST		
@@ -24,6 +25,7 @@ Compliance	COM-1	3	The system SHALL not create electromagnetic interference with
 Environmental	ENV-1	1	The system SHALL perform all functions in the expected environment of the veterinary center.	v1		ANALYSIS		
 Reliability	REL-1	1	The system SHALL withstand impacts proportional to the mass of the patient.	v1		TEST		
 	REL-2	1	The firmware SHALL operate continuously for at least 7 days without crashing, freezing, unintended resetting, or manual power cycling	v1		TEST		
+	REL-3	1	The system must maintain monitoring capabilities regardless of the patient's orientation or movement.	v2		TEST		
 Power	POW-1	1	The system SHALL sustain on battery power for at least 1 day.	v1		TEST		
 	POW-2	2	The system SHALL alert staff on low battery power.	v1		TEST		
 	POW-3	3	The system SHOULD show the battery level on the GUI.	v1		TEST		
