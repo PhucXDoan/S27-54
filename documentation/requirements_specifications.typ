@@ -235,6 +235,7 @@
   [02], [#TODO[]], [
     Expand top-level customer needs table. \
     Expand document review and approval table. \
+    Expand document acronyms table. \
     Grammatical changes. \
   ], [
     #TODO[]
@@ -369,6 +370,7 @@ pertaining to the product.
   [IEEE], [Institute of Electrical and Electronics Engineers],
   [ECG ], [Electrocardiogram                                ],
   [MCU ], [Microcontroller Unit                             ],
+  [VMCVM], [Virginia-Maryland College of Veterinary Medicine],
   // [DHF ], [#TODO[Not even used.] Design History File],
   // [CR  ], [#TODO[Not even used.] Customer Requirements],
   // [SR  ], [#TODO[Not even used.] System Requirements],
