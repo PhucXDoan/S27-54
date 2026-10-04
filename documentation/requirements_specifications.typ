@@ -1180,7 +1180,7 @@ Assumptions made for @target-specifications:
       0#sym.degree - 45#sym.degree \ 70#sym.degree - 110#sym.degree
     ],
     [
-      120#sym.degree - 145#sym.degree
+      150#sym.degree - 180#sym.degree
     ],
     [
       Measure the total degrees turned, if it's standing (0#sym.degree - 45#sym.degree), and if it's in lateral recumbency (70#sym.degree - 110#sym.degree).
