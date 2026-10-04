@@ -9,34 +9,33 @@ Functional	FUN-1	1	The system SHALL monitor heart rate.	v1		DEMONSTRATION
 	FUN-4	2	The system SHOULD monitor respiratory pattern.	v1		DEMONSTRATION		
 	FUN-5	1	The system SHALL measure patient movement.	v1		DEMONSTRATION		
 	FUN-6	1	The system SHALL notify relevant medical staff of warnings and errors.	v1		DEMONSTRATION		
-	FUN-7	1	The system SHALL be compatible with existing medical intranet systems 	v1		DEMONSTRATION		
-	FUN-8	2	The system SHOULD include on-board self-diagnostics that display the status of power, sensors, and network	v1		INSPECTION		
+	FUN-7	1	The system SHALL be compatible with existing medical intranet systems.	v1		DEMONSTRATION		
+	FUN-8	2	The system SHOULD include on-board self-diagnostics that display the status of power, sensors, and network.	v1		INSPECTION		
 Performance	PER-1	2	The heart rate monitoring SHALL be within +/- 2 BPM compared to a commercial heart rate monitor product.	v1		TEST		
-	PER-2	2	The respiratory rate monitoring SHALL be within +/- 2 BrPM (breaths per min) compared to a commercial respiratory rate monitor	v1		TEST		
-	PER-3	1	The movement monitoring system SHALL detect roll-onto-back events with at least 90% agreement compared to manual observation	v1		TEST		
-	PER-4	1	The movement monitoring system SHALL detect when the horse's front legs are in front of its face with at least 90% agreement compared to manual observation 	v1		TEST		
-	PER-5	1	The movement monitoring system SHALL detect lying/standing transitions with at least 90% agreement compared to manual observation	v1		TEST		
-	PER-6	1	The system SHALL transmit an emergency alert within 60 seconds of detecting signs of distress 	v1		TEST		
+	PER-2	2	The respiratory rate monitoring SHALL be within +/- 2 BrPM (breaths per min) compared to a commercial respiratory rate monitor.	v1		TEST		
+	PER-3	1	The movement monitoring system SHALL detect roll-onto-back events with at least 90% agreement compared to manual observation.	v1		TEST		
+	PER-4	1	The movement monitoring system SHALL detect when the horse's front legs are in front of its face with at least 90% agreement compared to manual observation.	v1		TEST		
+	PER-5	1	The movement monitoring system SHALL detect lying/standing transitions with at least 90% agreement compared to manual observation.	v1		TEST		
+	PER-6	1	The system SHALL transmit an emergency alert within 60 seconds of detecting signs of distress.	v1		TEST		
 	PER-7	3	The system QoS MAY be in compliance with IEEE Std 11073-00101™-2008.	v1		TEST		
-Compliance	COM-1	3	The system SHALL not create electromagnetic interference with other medical equipment or IT systems (IEC 60601-1)	v1		ANALYSIS		
-	COM-2	1	The system SHALL comply with relevant veterinary and medical privacy regulations 	v1		ANALYSIS		
-	COM-3	2	The system SHALL have a maximum leakage current for normal and single fault conditions of 100uA and 500uA, respectively (IEC 60601-1)	v1		ANALYSIS		
-Environmental	ENV-1	1	The system SHALL perform all functions in the expected environment of the veterinary center	v1		ANALYSIS		
+Compliance	COM-1	3	The system SHALL not create electromagnetic interference with other medical equipment or IT systems (IEC 60601-1).	v1		ANALYSIS		
+	COM-2	1	The system SHALL comply with relevant veterinary and medical privacy regulations.	v1		ANALYSIS		
+	COM-3	2	The system SHALL have a maximum leakage current for normal and single fault conditions of 100uA and 500uA, respectively (IEC 60601-1).	v1		ANALYSIS		
+Environmental	ENV-1	1	The system SHALL perform all functions in the expected environment of the veterinary center.	v1		ANALYSIS		
 Reliability	REL-1	1	The system SHALL withstand impacts proportional to the mass of the patient.	v1		TEST		
 	REL-2	1	The firmware SHALL operate continuously for at least 7 days without crashing, freezing, unintended resetting, or manual power cycling	v1		TEST		
 Power	POW-1	1	The system SHALL sustain on battery power for at least 1 day.	v1		TEST		
 	POW-2	2	The system SHALL alert staff on low battery power.	v1		TEST		
-	POW-3	3	The system SHOULD show the battery level on the GUI	v1		TEST		
-	POW-4	3	The system SHOULD display the remaining battery time on the GUI	v1		TEST		
-Mechanical	ME-1	1	The product and harness SHALL minimize risk of mechanical hazards including cuts by sharp surfaces and entanglement 	v1		INSPECTION		
+	POW-3	3	The system SHOULD show the battery level on the GUI.	v1		TEST		
+	POW-4	3	The system SHOULD display the remaining battery time on the GUI.	v1		TEST		
+	ME-1	1	The product and harness SHALL minimize risk of mechanical hazards including cuts by sharp surfaces and entanglement.	v1		INSPECTION		
 	ME-2	2	Battery swap SHOULD be able to be performed by personnel with limited technical knowledge of the system.	v1		DEMONSTRATION		
-	ME-3	1	The harness SHALL be adjustable and flexible to accommodate varying foal sizes without restricting normal movement or causing discomfort	v1		DEMONSTRATION		
-	ME-4	1	The harness SHALL NOT place excessive pressure onto the foals	v1		DEMONSTRATION		
-	ME-5	2	The product SHOULD minimize interference to existing workflow of medical staff.	v1		DEMONSTRATION		
+	ME-3	1	The harness SHALL be adjustable and flexible to accommodate varying foal sizes without restricting normal movement or causing discomfort.	v1		DEMONSTRATION		
+	ME-4	1	The harness SHALL NOT place excessive pressure onto the foals.	v1		DEMONSTRATION		
 Input/Output	I/O-1	2	The medical system SHOULD still be functional without the heart rate monitor.	v1		TEST		
-	I/O-2	2	The medical system SHOULD still be functional without the ECG monitor. 	v1		TEST		
-	I/O-3	2	The medical system SHOULD still be functional without the respiratory monitor. 	v1		TEST		
-	I/O-4	2	The medical system SHOULD still be functional without the movement monitor.  	v1		TEST		
+	I/O-2	2	The medical system SHOULD still be functional without the ECG monitor.	v1		TEST		
+	I/O-3	2	The medical system SHOULD still be functional without the respiratory monitor.	v1		TEST		
+	I/O-4	2	The medical system SHOULD still be functional without the movement monitor.	v1		TEST		
 	I/O-5	3	The medical device SHOULD have indicators (e.g., LEDs, buzzers) to indicate the current device operating condition (e.g., battery level).	v1		DEMONSTRATION		
 Testing	TEST-1	1		v1				
 Configuration	CON-1	2	The window for nominal vital sign parameters SHALL be configurable.	v1		DEMONSTRATION		
