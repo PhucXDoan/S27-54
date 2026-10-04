@@ -404,7 +404,7 @@ a number of which are in critical condition.
 Monitoring is performed by nursing and veterinary staff
 who assess vitals (e.g., heart rate, respiratory rate, movement)
 many times over the course of an entire day
-in a 6ft#super[2] to 12ft#super[2] stall.
+in a 6ft#sym.times;6ft to 12ft#sym.times;12ft stall.
 The cumulative burden
 across 2-3 simultaneous patients on routine care
 costs the staff great time and effort.
@@ -561,7 +561,7 @@ The system is intended for initial use on 1-3 patients at a time.
 
 The external factor that affects the project the most is environmental.
 
-The automated medical device operates in a \~6ft#super[2] to \~12ft#super[2] stall
+The automated medical device operates in a \~6ft#sym.times;6ft to \~12ft#sym.times;12ft stall
 environment within the Marion duPont Scott Equine Medical Center.
 The stall can be bedded with pine shavings
 and equipped with hay, water, grain buckets, mattresses, and other such amenities.
