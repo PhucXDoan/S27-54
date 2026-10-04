@@ -1,6 +1,6 @@
 Product Name:	Health Monitor for Newborn Foals and Their Mothers							
 Product Description:	Non-invasive, electronically automated health monitor for equine patients.							
-Product Version:	v1.0							
+Product Version:								
 Last Updated [Date]:								
 Category	REQ-#	Priority	Requirement	Version #	Notes	Verification Type	Customer & VT Acceptance	Discussion
 Functional	FUN-1	1	The system SHALL monitor heart rate.	v1		DEMONSTRATION		
