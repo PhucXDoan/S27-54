@@ -17,7 +17,7 @@
 )
 
 #set enum(
-  spacing: 2em,
+  spacing : 2em,
 )
 
 #set list(
@@ -237,6 +237,7 @@
     Expand document review and approval table. \
     Expand document acronyms table. \
     Grammatical changes. \
+    Update product requirements. \
   ], [
     #TODO[]
   ], [
@@ -611,7 +612,7 @@ the existing patient care routine.
 The device must therefore be unobtrusive,
 easy to attach and remove,
 and reliable enough to earn sustained trust
-without introducing issues such as alarm fatigue. System requirements ME-2 and ME-5 address these constraints,
+without introducing issues such as alarm fatigue. System requirements ME-2 and FUN-9 address these constraints,
 by requiring the product to minimize interference with the medical staff’s existing workflow
 and allow battery replacement to be performed by personnel with limited technical knowledge of the system.
 
@@ -979,6 +980,10 @@ frequent communication between the team, the stakeholders, and the members there
       The system SHOULD include on-board self-diagnostics that display the status of power, sensors, and network.
     ], [INSPECTION],
 
+    [FUN-9], [2], [
+      The product SHOULD minimize interference to existing workflow of medical staff.
+    ], [DEMONSTRATION],
+
     [PER-1], [2], [
       The heart rate monitoring SHALL be within #sym.plus.minus;2 BPM compared to a commercial heart rate monitor product.
     ], [TEST],
@@ -1031,6 +1036,10 @@ frequent communication between the team, the stakeholders, and the members there
       The firmware SHALL operate continuously for at least 7 days without crashing, freezing, unintended resetting, or manual power cycling.
     ], [TEST],
 
+    [REL-3], [1], [
+      The system must maintain monitoring capabilities regardless of the patient's orientation or movement.
+    ], [TEST],
+
     [POW-1], [1], [
       The system SHALL sustain on battery power for at least 1 day.
     ], [TEST],
@@ -1061,10 +1070,6 @@ frequent communication between the team, the stakeholders, and the members there
 
     [ME-4], [1], [
       The harness SHALL NOT place excessive pressure onto the foals.
-    ], [DEMONSTRATION],
-
-    [ME-5], [2], [
-      The product SHOULD minimize interference to existing workflow of medical staff.
     ], [DEMONSTRATION],
 
     [I/O-1], [2], [
