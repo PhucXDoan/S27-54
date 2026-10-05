@@ -17,7 +17,7 @@
 )
 
 #set enum(
-  spacing: 2em,
+  spacing : 2em,
 )
 
 #set list(
@@ -235,6 +235,9 @@
   [02], [#TODO[]], [
     Expand top-level customer needs table. \
     Expand document review and approval table. \
+    Expand document acronyms table. \
+    Grammatical changes. \
+    Update product requirements. \
   ], [
     #TODO[]
   ], [
@@ -368,6 +371,7 @@ pertaining to the product.
   [IEEE], [Institute of Electrical and Electronics Engineers],
   [ECG ], [Electrocardiogram                                ],
   [MCU ], [Microcontroller Unit                             ],
+  [VMCVM], [Virginia-Maryland College of Veterinary Medicine],
   // [DHF ], [#TODO[Not even used.] Design History File],
   // [CR  ], [#TODO[Not even used.] Customer Requirements],
   // [SR  ], [#TODO[Not even used.] System Requirements],
@@ -401,13 +405,13 @@ a number of which are in critical condition.
 Monitoring is performed by nursing and veterinary staff
 who assess vitals (e.g., heart rate, respiratory rate, movement)
 many times over the course of an entire day
-in a 6ft#super[2] to 12ft#super[2] stall.
+in a 6ft#sym.times;6ft to 12ft#sym.times;12ft stall.
 The cumulative burden
 across 2-3 simultaneous patients on routine care
 costs the staff great time and effort.
 Thus, an electronically automated solution is needed where
 continuous, non-invasive monitoring can take place
-and be able to send alerts in situations that requires the medical staff's attention.
+and be able to send alerts in situations that require the medical staff's attention.
 
 
 
@@ -416,7 +420,7 @@ and be able to send alerts in situations that requires the medical staff's atten
 The automated medical system will be attached to the patient in a non-invasive manner.
 The mounting of the device is designed in such a way that it minimizes additional risk to the patient
 (e.g., getting tangled)
-and minimizes discomfort (i.e., can be adjusted to foals and mares).
+and minimizes discomfort by being adjustable for both foals and mares.
 The device, by default,
 will incorporate a heart rate sensor,
 an ECG sensor,
@@ -426,8 +430,8 @@ and a movement sensor.
 For flexibility,
 not all sensors are required for functionality of the automated medical system
 and can be disconnected from the overall system.
-This is to support situations where the mounting of a particular sensor
-may be infeasible for a particular patient.
+This is to support situations where mounting a particular sensor
+may be infeasible for a given patient.
 
 #standard-image(
   caption : [Top-level system diagram.],
@@ -438,8 +442,8 @@ The sensors monitor the corresponding vitals of the patient
 and send the data to the main MCU by wire.
 The main MCU processes the data for any abnormalities,
 such as the heart rate BPM being out of the configured nominal window.
-The main MCU transmits telemetry via Wi-Fi,
-to which the data can be viewed on a desktop application.
+The main MCU transmits telemetry via Wi-Fi to a desktop application,
+where the data can be viewed in real-time.
 The desktop application can display real-time vitals of the patient
 or patients if multiple devices are used.
 The desktop application will be responsible for sending alerts to all subscribed staff
@@ -453,7 +457,7 @@ The battery system is the component that powers the automated medical system
 and will be routinely recharged by the medical staff.
 The automated medical system will incorporate diagnostics (e.g., LEDs, buzzers)
 to indicate the working condition of the device.
-It's intended for the automated medical system to be initially used on around 1-3 patients at a time.
+The system is intended for initial use on 1-3 patients at a time.
 
 #standard-table(
 
@@ -469,7 +473,7 @@ It's intended for the automated medical system to be initially used on around 1-
     Device shall not break the skin, enter through a surgical incision,
     or otherwise physically penetrate the body or its internal cavities.
   ],
-  [Adjustable], [
+  [Non-restrictive], [
     System shall not restrict foal movement or cause distress.
   ],
   [Timely alerts], [
@@ -511,7 +515,7 @@ It's intended for the automated medical system to be initially used on around 1-
     It is expected that the device will actually save time and effort in providing the care
     and is preferable to use rather than not.
     Aspects affecting the usability of the product
-    includes the quality of documentation (e.g., user guide),
+    include the quality of documentation (e.g., user guide),
     effort of maintenance (e.g., replacing batteries),
     and ease of use (e.g., getting alerted).
     This stakeholder's primary assets are time, effort, and quality of care.
@@ -525,16 +529,16 @@ It's intended for the automated medical system to be initially used on around 1-
     will be used on patients under the care of the hospital.
     By the act of using it,
     the medical center's reputation is tied to the reliability of the product
-    and is liable to any shortcomings that the product may have.
-    This stakeholder's primary assets is the patient and reputation.
+    and is liable for any shortcomings that the product may have.
+    This stakeholder's primary assets are the patient and reputation.
   ],
   [
     _*Equine Patient's Owner*_
 
     The equine patient is ultimately the property of the owner.
     It is in their best interest that the product is safe and secure.
-    Safe meaning that the device does not further complicate the care of the patient,
-    and secure in that the telemetry collected is entirely confidential between
+    Safe, meaning that the device does not further complicate the care of the patient,
+    and secure, in that the telemetry collected is entirely confidential between
     the owner and the medical center.
     This stakeholder's primary asset is the patient.
   ],
@@ -558,7 +562,7 @@ It's intended for the automated medical system to be initially used on around 1-
 
 The external factor that affects the project the most is environmental.
 
-The automated medical device operates in a \~6ft#super[2] to \~12ft#super[2] stall
+The automated medical device operates in a \~6ft#sym.times;6ft to \~12ft#sym.times;12ft stall
 environment within the Marion duPont Scott Equine Medical Center.
 The stall can be bedded with pine shavings
 and equipped with hay, water, grain buckets, mattresses, and other such amenities.
@@ -577,9 +581,9 @@ veterinary center.
 
 The mechanical demands are also substantial.
 A newborn foal can weigh 70 kg (154 lb)
-and a mare 530 kg (1,168 lb) on the high-end@HEIDLER2004883.
-The patient can move, roll, and shift position,
-especially frequently if they're uncomfortable.
+and a mare 530 kg (1,168 lb) on the high end@HEIDLER2004883.
+The patient can move, roll, and shift position frequently,
+especially if they're uncomfortable.
 In this way, the harness and device must withstand
 repeated flexing, impact, and vibration
 while maintaining sensor accuracy.
@@ -593,7 +597,7 @@ The product design must also take into account
 the hospital's existing infrastructure, culture, and workflow.
 In particular,
 the nursing staff need to be able to manually assess the patient's vitals
-and upkeep patient care equipment
+and maintain patient care equipment
 (e.g., provide milk through feeding tube, empty urine bags).
 The regular routine of the nursing staff
 can be incorporated into the product's design
@@ -608,7 +612,9 @@ the existing patient care routine.
 The device must therefore be unobtrusive,
 easy to attach and remove,
 and reliable enough to earn sustained trust
-without introducing issues such as alarm fatigue. System requirements ME-2 and ME-5 addresses these constraints, by requiring the product to minimize interference with the medical staff’s existing workflow and allow battery replacement to be performed by personnel with limited technical knowledge of the system.
+without introducing issues such as alarm fatigue. System requirements ME-2 and FUN-9 address these constraints,
+by requiring the product to minimize interference with the medical staff’s existing workflow
+and allow battery replacement to be performed by personnel with limited technical knowledge of the system.
 
 
 
@@ -628,9 +634,9 @@ and in the case of foals,
 often express pain and distress differently from adult horses.
 Above all other constraints, the safety and welfare of the patient is the main priority.
 This factor then implies additional requirements
-such the materials in contact with the animal being safe, non-irritating,
-and not pose additional risks.
-System requirement ME-3 account for these concerns, which require the harness and product to minimize risk of mechanical hazards including cuts by sharp edges or entanglement.
+such as the materials in contact with the animal being safe, non-irritating,
+and not posing additional risks.
+System requirement ME-3 accounts for these concerns, which require the harness and product to minimize risk of mechanical hazards including cuts by sharp edges or entanglement.
 Overall, for the automated medical device to be effective,
 the patient's unique attributes must be taken into account
 and result in a product design that is adjustable.
@@ -643,7 +649,7 @@ would lead to alarm fatigue
 and thus desensitize staff to genuine alerts.
 Conversely,
 inaction to alert on legitimate issues
-would be a failure in reducing the time and effort spent
+will be a failure in reducing the time and effort spent
 on patient care on the medical staff's behalf.
 These factors further call for a product design
 that can be adapted and configured for each patient's condition
@@ -657,11 +663,11 @@ because a device that is difficult to use or understand
 will either be underutilized or cause the staff to struggle to interpret its output,
 both of which degrade patient safety.
 To minimize the burden,
-the product would be accompanied with a user guide
+the product will be accompanied by a user guide
 that is clear, task-oriented, and accessible to both the medical staff and IT staff.
 Additionally,
-the device would incorporate on-board self-diagnostics
-(e.g., statuses on power, sensors, network)
+the device will incorporate on-board self-diagnostics
+(e.g., status indicators for power, sensors, network)
 so that a system failure/issue is more immediately visible to the staff (system requirement FUN-8).
 
 
@@ -694,7 +700,7 @@ Any known shortcomings in the product design or implementation will be communica
   properly the contributions of others;
 ]
 
-The team seek to validate designs that
+The team seeks to validate designs that
 will align with this requirements specification document,
 both ethically and functionally.
 This is achieved by upholding transparent communication with stakeholders
@@ -759,7 +765,7 @@ frequent communication between the team, the stakeholders, and the members there
     The patient, typically a foal or a mare, is the secondary actor.
     The on-call physician
     is a secondary actor
-    who can potentially receives escalated alerts
+    who can potentially receive escalated alerts
     via the hospital's messaging system.
     The patient's owner
     is a stakeholder
@@ -786,11 +792,11 @@ frequent communication between the team, the stakeholders, and the members there
   [
     *Main Success Scenario (Normal Flow)*:\
     The technician attaches the sensor harness to the patient.
-    The harness is adjustable to smaller profile of a foal
+    The harness is adjustable to the smaller profile of a foal
     or to the larger girth of a mare,
     depending on the patient.
     The nurse is still capable of carrying out other medical routines
-    without being interfered by the device
+    without interference from the device
     (e.g., still able to place a stethoscope underneath the harness for auscultation).
 
     The device powers on and begins acquiring vitals;
@@ -819,7 +825,7 @@ frequent communication between the team, the stakeholders, and the members there
       spacing : 1em,
       [
         _Battery depletion._\
-        The device alerts staff on low battery.
+        The device alerts staff of low battery.
         The nurse swaps or recharges the battery
         during a routine stall entry.
         Monitoring resumes.
@@ -897,7 +903,7 @@ frequent communication between the team, the stakeholders, and the members there
         for a minimum 24-hour operating life.
         The device's battery is replaced or recharged daily
         by the nursing staff as part of routine care.
-        The battery form factor will the same as one can find off-the-shelf
+        The battery form factor will be the same as found off-the-shelf
         (e.g., AAA, 9V, etc.);
         whether or not the batteries themselves
         are rechargeable is up to the medical staff.
@@ -906,7 +912,7 @@ frequent communication between the team, the stakeholders, and the members there
         A single harness can be designed to be adjustable
         for both a foal and a mare patient,
         but multiple variations of harnesses
-        can also be designed if it is more practical this way.
+        can also be designed if that is more practical.
         In this case,
         the electronics can be transferred and reused between harnesses.
       ],
@@ -971,8 +977,12 @@ frequent communication between the team, the stakeholders, and the members there
     ], [DEMONSTRATION],
 
     [FUN-8], [2], [
-      The system SHOULD include on-board self-diagnostics that display the status the statuses of power, sensors, and network.
+      The system SHOULD include on-board self-diagnostics that display the status of power, sensors, and network.
     ], [INSPECTION],
+
+    [FUN-9], [2], [
+      The product SHOULD minimize interference to existing workflow of medical staff.
+    ], [DEMONSTRATION],
 
     [PER-1], [2], [
       The heart rate monitoring SHALL be within #sym.plus.minus;2 BPM compared to a commercial heart rate monitor product.
@@ -991,7 +1001,7 @@ frequent communication between the team, the stakeholders, and the members there
     ], [TEST],
 
     [PER-5], [1], [
-      The movement monitoring system SHALL detect laying/standing transitions with at least 90% agreement compared to manual observation.
+      The movement monitoring system SHALL detect lying/standing transitions with at least 90% agreement compared to manual observation.
     ], [TEST],
 
     [PER-6], [1], [
@@ -1026,6 +1036,10 @@ frequent communication between the team, the stakeholders, and the members there
       The firmware SHALL operate continuously for at least 7 days without crashing, freezing, unintended resetting, or manual power cycling.
     ], [TEST],
 
+    [REL-3], [1], [
+      The system must maintain monitoring capabilities regardless of the patient's orientation or movement.
+    ], [TEST],
+
     [POW-1], [1], [
       The system SHALL sustain on battery power for at least 1 day.
     ], [TEST],
@@ -1042,24 +1056,20 @@ frequent communication between the team, the stakeholders, and the members there
       The system SHOULD display the remaining battery time on the GUI.
     ], [TEST],
 
-    [ME-1 ], [1], [
+    [ME-1], [1], [
       The product and harness SHALL minimize risk of mechanical hazards including cuts by sharp surfaces and entanglement.
     ], [INSPECTION],
 
-    [ME-2 ], [2], [
+    [ME-2], [2], [
       Battery swap SHOULD be able to be performed by personnel with limited technical knowledge of the system.
     ], [DEMONSTRATION],
 
-    [ME-3 ], [1], [
+    [ME-3], [1], [
       The harness SHALL be adjustable and flexible to accommodate varying foal sizes without restricting normal movement or causing discomfort.
     ], [DEMONSTRATION],
 
-    [ME-4 ], [1], [
+    [ME-4], [1], [
       The harness SHALL NOT place excessive pressure onto the foals.
-    ], [DEMONSTRATION],
-
-    [ME-5 ], [2], [
-      The product SHOULD minimize interference to existing workflow of medical staff.
     ], [DEMONSTRATION],
 
     [I/O-1], [2], [
@@ -1067,7 +1077,7 @@ frequent communication between the team, the stakeholders, and the members there
     ], [TEST],
 
     [I/O-2], [2], [
-      The medical system SHOULD still be functional without the EKG monitor.
+      The medical system SHOULD still be functional without the ECG monitor.
     ], [TEST],
 
     [I/O-3], [2], [
@@ -1175,10 +1185,11 @@ Assumptions made for @target-specifications:
       0#sym.degree - 45#sym.degree \ 70#sym.degree - 110#sym.degree
     ],
     [
-      120#sym.degree - 145#sym.degree
+      150#sym.degree - 180#sym.degree
     ],
     [
-      Measure the total degrees turned and if its standing (0#sym.degree - 45#sym.degree) or is in lateral recumbency (70#sym.degree - 110#sym.degree) have that be acceptable. If it gets it (150#sym.degree - 180#sym.degree) then trigger and send an alert. 
+      Measure the total degrees turned, if it's standing (0#sym.degree - 45#sym.degree), and if it's in lateral recumbency (70#sym.degree - 110#sym.degree).
+      If abnormal (150#sym.degree - 180#sym.degree), trigger and send an alert.
     ],
 
     [PER-4],
@@ -1212,7 +1223,9 @@ Assumptions made for @target-specifications:
       90%
     ],
     [
-      Detect how many times the horses stand within a given hour. According to the client, if a foal stands more than three times within the hour, it means there is discomfort and attention is needed.
+      Detect how many times the horses stand within a given hour.
+      A foal standing more than three times within the hour
+      indicates discomfort and attention is needed.
     ],
 
     [PER-6],
@@ -1296,6 +1309,106 @@ Assumptions made for @target-specifications:
 ]
 
 #pagebreak()
+
+
+
+#page(flipped: true)[
+
+  == Benchmarking Information
+
+  #standard-table(
+
+    caption   : [Benchmarking information.],
+    breakable : false,
+    size      : 0.9em,
+    columns   : (auto                   , auto                , auto                      , auto                      , auto                      ),
+    align     : (center + horizon       , center + horizon    , center + horizon          , center + horizon          , center + horizon          ),
+    headers   : ([Feature / Requirement], [Target Requirement], [Existing Alternative \#1], [Existing Alternative \#2], [Existing Alternative \#3]),
+
+    [
+      *FUN-1* \
+      Measuring heart rate
+    ], [
+      Accurately measuring the heart rate of the foal.
+    ], [
+      Single lead ECG placed on the foal.
+    ], [
+      Wearable PPG sensor placed near the base of the tail.
+    ], [
+      Wearable ECG mounted electrodes.
+    ],
+
+    [
+      *FUN-3* \
+      Measuring respiratory rate
+    ],
+    [
+      Accurately measuring the respiratory rate of the foal.
+    ],
+    [
+      Nasal airflow, temperature sensing, or audio processing.
+    ],
+    [
+      Plethysmography via impedance or resistive measurement.
+    ],
+    [
+      Ultrasound.
+    ],
+
+    [
+      *FUN-5* \
+      Abnormal movement \ detection
+    ],
+    [
+      Detect concerning behaviors such as rolling on back, front limbs up by the face, +3 standing/lying transitions per hour, and rapid twitching/fasciculations.
+    ],
+    [
+      Computer vision used to detect subtle movement and changes in posture.
+    ],
+    [
+      Triaxial accelerometer attached near the tail of the foal to measure orientation and movement.
+    ],
+    [
+      Accelerometer + machine learning colic detection used to detect normal and pain-related movement patterns.
+    ],
+
+    [
+      *FUN-6* \
+      Transmitting \ emergency alerts
+    ],
+    [
+      Mobile alert sent to nursing staff when monitored biometric parameter(s) goes out of range or abnormal movement detected.
+    ],
+    [
+      Internal emergency messaging system (Doc Halo) sends alerts directly to the doctor.
+    ],
+    [
+      Sends an SMS to nursing staff when abnormal activity is detected.
+    ],
+    [
+      A GUI-based alert will have a small alert that would need to be dismissed.
+    ],
+
+    [
+      *ME-3* \
+      Harness flexibility \ and comfortability
+    ],
+    [
+      Device must be flexible, comfortable, and noninvasive for the foals.
+    ],
+    [
+      Surcingle.
+    ],
+    [
+      Full-body suit \ (i.e., "slinky").
+    ],
+    [
+      Halter or head \ collar mounted device.
+    ],
+
+  )
+
+]
 
 
 
