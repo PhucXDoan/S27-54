@@ -1,5 +1,6 @@
 build/
 .history/
+node_modules/
 *.kicad_prl
 *.pdf
 ~*
