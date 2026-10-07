@@ -1,0 +1,16 @@
+.history-page {
+  width: min(100% - 48px, 1440px);
+  margin: 0 auto;
+  padding: 24px 0 72px;
+}
+
+.history-page .monitor-connection-bar {
+  margin-bottom: 18px;
+}
+
+@media (max-width: 720px) {
+  .history-page {
+    width: min(100% - 28px, 1440px);
+    padding-top: 14px;
+  }
+}

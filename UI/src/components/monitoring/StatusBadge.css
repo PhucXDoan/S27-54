@@ -1,0 +1,62 @@
+.monitor-status-badge {
+  --status-accent: #526474;
+  --status-background: #eef2f4;
+  --status-border: #d7dfe4;
+
+  align-items: center;
+  background: var(--status-background);
+  border: 1px solid var(--status-border);
+  border-radius: 999px;
+  color: var(--status-accent);
+  display: inline-flex;
+  font-size: 0.78rem;
+  font-weight: 700;
+  gap: 0.35rem;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  min-height: 1.7rem;
+  padding: 0.26rem 0.62rem;
+  white-space: nowrap;
+}
+
+.monitor-status-badge__icon {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.monitor-status-badge__icon svg {
+  height: 0.9rem;
+  stroke-width: 2.4;
+  width: 0.9rem;
+}
+
+.monitor-status-badge--positive {
+  --status-accent: #176447;
+  --status-background: #e8f5ef;
+  --status-border: #bcdfd0;
+}
+
+.monitor-status-badge--warning {
+  --status-accent: #835200;
+  --status-background: #fff5d9;
+  --status-border: #efdba5;
+}
+
+.monitor-status-badge--critical {
+  --status-accent: #a0272f;
+  --status-background: #fff0f1;
+  --status-border: #efc3c7;
+}
+
+.monitor-status-badge--info {
+  --status-accent: #245e82;
+  --status-background: #edf6fb;
+  --status-border: #c9dfeb;
+}
+
+@media (forced-colors: active) {
+  .monitor-status-badge {
+    border-color: currentColor;
+  }
+}
