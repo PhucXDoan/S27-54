@@ -1,0 +1,174 @@
+.monitor-movement-card {
+  background: #ffffff;
+  border: 1px solid #dce4e8;
+  border-radius: 1rem;
+  box-shadow: 0 0.2rem 0.8rem rgb(31 55 69 / 7%);
+  color: #162c38;
+  min-width: 0;
+  padding: clamp(1rem, 2vw, 1.35rem);
+}
+
+.monitor-movement-card--stale {
+  background: #fcfaf4;
+  border-color: #e5d7b1;
+}
+
+.monitor-movement-card--unavailable {
+  background: #f8fafb;
+}
+
+.monitor-movement-card__header {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.monitor-movement-card__eyebrow {
+  color: #647781;
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.075em;
+  margin-bottom: 0.12rem;
+  text-transform: uppercase;
+}
+
+.monitor-movement-card__header h2 {
+  color: #203d4a;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.monitor-movement-card__current {
+  align-items: center;
+  display: flex;
+  gap: 0.85rem;
+  margin: 1.25rem 0 1.1rem;
+}
+
+.monitor-movement-card__current > svg {
+  background: #e8f3f0;
+  border-radius: 0.7rem;
+  color: #1c6b5a;
+  height: 2rem;
+  padding: 0.6rem;
+  width: 2rem;
+}
+
+.monitor-movement-card--unavailable .monitor-movement-card__current > svg {
+  background: #edf1f3;
+  color: #647680;
+}
+
+.monitor-movement-card__current span {
+  color: #6a7b84;
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 700;
+  margin-bottom: 0.15rem;
+}
+
+.monitor-movement-card__current strong {
+  color: #163642;
+  display: block;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  line-height: 1.12;
+}
+
+.monitor-movement-card__notice,
+.monitor-movement-card__stale {
+  border-radius: 0.55rem;
+  font-size: 0.82rem;
+  margin: 0 0 1rem;
+  padding: 0.52rem 0.65rem;
+}
+
+.monitor-movement-card__notice {
+  background: #eef2f4;
+  border: 1px solid #d9e0e4;
+  color: #50636d;
+}
+
+.monitor-movement-card__stale {
+  align-items: center;
+  background: #fff4d9;
+  border: 1px solid #ead8a8;
+  color: #7a520e;
+  display: flex;
+  gap: 0.45rem;
+}
+
+.monitor-movement-card__stale svg {
+  height: 0.95rem;
+  width: 0.95rem;
+}
+
+.monitor-movement-card__details {
+  border-top: 1px solid #e4e9ec;
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.monitor-movement-card__details > div {
+  align-items: center;
+  border-bottom: 1px solid #edf0f2;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 0.72rem 0;
+}
+
+.monitor-movement-card__details > div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.monitor-movement-card__details dt {
+  align-items: center;
+  color: #61747e;
+  display: flex;
+  font-size: 0.78rem;
+  font-weight: 700;
+  gap: 0.4rem;
+}
+
+.monitor-movement-card__details dt svg {
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+.monitor-movement-card__details dd {
+  color: #203b47;
+  font-size: 0.84rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  margin: 0;
+  text-align: right;
+}
+
+.monitor-movement-card__details .monitor-movement-card__count {
+  font-size: 1.1rem;
+}
+
+@media (max-width: 35rem) {
+  .monitor-movement-card__header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .monitor-movement-card__header .monitor-status-badge {
+    align-self: flex-start;
+  }
+
+  .monitor-movement-card__details > div {
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
+  .monitor-movement-card__details dd {
+    padding-left: 1.3rem;
+    text-align: left;
+  }
+}

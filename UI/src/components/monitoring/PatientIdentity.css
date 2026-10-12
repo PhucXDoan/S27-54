@@ -1,0 +1,115 @@
+.monitor-patient {
+  background: #ffffff;
+  border: 1px solid #dce4e8;
+  border-radius: 1rem;
+  box-shadow: 0 0.2rem 0.8rem rgb(31 55 69 / 7%);
+  color: #182f3a;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(6.5rem, 0.42fr) minmax(0, 1fr);
+  overflow: hidden;
+  padding: 0.85rem;
+}
+
+.monitor-patient__photo {
+  aspect-ratio: 4 / 5;
+  background: #e9eef0;
+  border-radius: 0.75rem;
+  min-height: 8.5rem;
+  overflow: hidden;
+}
+
+.monitor-patient__photo img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.monitor-patient__photo-fallback {
+  align-items: center;
+  color: #657981;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+
+.monitor-patient__photo-fallback svg {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.monitor-patient__content {
+  align-self: center;
+  min-width: 0;
+}
+
+.monitor-patient__eyebrow {
+  color: #657882;
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.monitor-patient h2 {
+  color: #143543;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  line-height: 1.08;
+  margin: 0.2rem 0 0.4rem;
+}
+
+.monitor-patient__id {
+  align-items: center;
+  color: #4f6570;
+  display: flex;
+  font-size: 0.82rem;
+  font-weight: 750;
+  gap: 0.36rem;
+  margin: 0 0 0.85rem;
+}
+
+.monitor-patient__id svg,
+.monitor-patient dt svg {
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+.monitor-patient dl {
+  display: grid;
+  gap: 0.58rem;
+  margin: 0;
+}
+
+.monitor-patient dl div {
+  display: grid;
+  gap: 0.12rem;
+  grid-template-columns: minmax(4rem, 0.72fr) minmax(0, 1fr);
+}
+
+.monitor-patient dt {
+  align-items: center;
+  color: #6a7b83;
+  display: flex;
+  font-size: 0.73rem;
+  font-weight: 700;
+  gap: 0.3rem;
+}
+
+.monitor-patient dd {
+  color: #2b434e;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 34rem) {
+  .monitor-patient {
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+  }
+
+  .monitor-patient__photo {
+    min-height: 7rem;
+  }
+}

@@ -1,0 +1,161 @@
+.figure {
+  min-width: 0;
+  margin: 0;
+  padding: 1.1rem;
+  border: 1px solid var(--border, #dce4e2);
+  border-radius: 14px;
+  background: var(--surface, #ffffff);
+}
+
+.caption {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.caption > span:first-child,
+.latest {
+  display: flex;
+  flex-direction: column;
+}
+
+.caption strong {
+  color: var(--ink, #17322f);
+  font-size: 0.88rem;
+}
+
+.caption small {
+  margin-top: 0.15rem;
+  color: var(--muted, #657672);
+  font-size: 0.68rem;
+  font-weight: 500;
+}
+
+.latest {
+  align-items: flex-end;
+  color: #17695d;
+  font-size: 1.2rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.respiration .latest {
+  color: #315f99;
+}
+
+.latest small {
+  margin-top: 0.22rem;
+  font-size: 0.65rem;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 12rem;
+  overflow: visible;
+}
+
+.gridLine {
+  stroke: #e3eae8;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.axisLabel,
+.timeLabel {
+  fill: #7b8b88;
+  font-family: inherit;
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+}
+
+.rangeBand {
+  fill: #e8f4ef;
+  opacity: 0.7;
+}
+
+.areaStart {
+  stop-color: #2b8879;
+  stop-opacity: 0.2;
+}
+
+.areaEnd {
+  stop-color: #2b8879;
+  stop-opacity: 0;
+}
+
+.respiration .areaStart {
+  stop-color: #4a78ad;
+}
+
+.line {
+  stroke: #17695d;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.respiration .line {
+  stroke: #315f99;
+}
+
+.point,
+.lastPoint {
+  fill: #ffffff;
+  stroke: #17695d;
+  stroke-width: 1.75;
+  vector-effect: non-scaling-stroke;
+}
+
+.respiration .point,
+.respiration .lastPoint {
+  stroke: #315f99;
+}
+
+.lastPoint {
+  fill: #17695d;
+  stroke: #ffffff;
+  stroke-width: 2.5;
+}
+
+.respiration .lastPoint {
+  fill: #315f99;
+  stroke: #ffffff;
+}
+
+.rangeKey {
+  margin: 0.25rem 0 0;
+  color: var(--muted, #657672);
+  font-size: 0.65rem;
+}
+
+.rangeKey::before {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.5rem;
+  margin-right: 0.35rem;
+  border-radius: 2px;
+  background: #e1f0ea;
+  content: '';
+}
+
+.empty {
+  display: grid;
+  min-height: 15rem;
+  place-items: center;
+  border: 1px dashed #c4cecc;
+  border-radius: 14px;
+  background: #f8faf9;
+  color: var(--muted, #657672);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 640px) {
+  .svg {
+    height: 10rem;
+  }
+}

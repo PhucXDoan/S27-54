@@ -1,0 +1,121 @@
+.demo-panel {
+  position: fixed;
+  z-index: 50;
+  right: 18px;
+  bottom: 18px;
+  width: min(310px, calc(100vw - 28px));
+  border: 1px solid #becdc9;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 16px 45px rgba(24, 36, 33, 0.18);
+  backdrop-filter: blur(14px);
+}
+
+.demo-panel summary {
+  display: flex;
+  min-height: 52px;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+  list-style: none;
+  gap: 10px;
+}
+
+.demo-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.demo-panel__bug {
+  display: grid;
+  width: 33px;
+  height: 33px;
+  place-items: center;
+  border-radius: 9px;
+  color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.demo-panel__bug svg {
+  width: 16px;
+  height: 16px;
+}
+
+.demo-panel summary > span:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.demo-panel summary strong {
+  font-size: 0.78rem;
+}
+
+.demo-panel summary small {
+  color: var(--muted);
+  font-size: 0.65rem;
+}
+
+.demo-panel__content {
+  display: flex;
+  padding: 4px 13px 13px;
+  border-top: 1px solid var(--line);
+  flex-direction: column;
+  gap: 10px;
+}
+
+.demo-panel__content > p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.69rem;
+}
+
+.demo-panel label {
+  display: flex;
+  color: var(--muted-strong);
+  flex-direction: column;
+  font-size: 0.68rem;
+  font-weight: 700;
+  gap: 4px;
+}
+
+.demo-panel select {
+  width: 100%;
+  min-height: 38px;
+  padding: 6px 30px 6px 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  color: var(--ink);
+  background: #fff;
+  font-size: 0.76rem;
+}
+
+.demo-panel__description {
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1.4;
+}
+
+.demo-panel button {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--muted-strong);
+  background: var(--offline-soft);
+  font-size: 0.73rem;
+  font-weight: 700;
+  gap: 6px;
+}
+
+.demo-panel button svg {
+  width: 14px;
+  height: 14px;
+}
+
+@media (max-width: 600px) {
+  .demo-panel {
+    right: 14px;
+    bottom: 14px;
+  }
+}

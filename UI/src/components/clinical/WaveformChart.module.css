@@ -1,0 +1,129 @@
+.chart {
+  position: relative;
+  overflow: hidden;
+  min-height: 13rem;
+  border: 1px solid #dce7e4;
+  border-radius: 12px;
+  background: #fbfdfd;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 11.5rem;
+}
+
+.gridMinor {
+  stroke: #e7efed;
+  stroke-width: 1;
+}
+
+.gridMajor {
+  stroke: #d3e1de;
+  stroke-width: 1.25;
+}
+
+.grid {
+  opacity: 0.75;
+}
+
+.baseline {
+  stroke: #bfcecb;
+  stroke-dasharray: 5 6;
+  stroke-width: 1;
+}
+
+.trace,
+.traceShadow {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.traceShadow {
+  stroke: rgba(22, 104, 91, 0.14);
+  stroke-width: 6;
+}
+
+.trace {
+  stroke: #17695d;
+  stroke-width: 2.25;
+}
+
+.respiration .traceShadow {
+  stroke: rgba(49, 95, 153, 0.14);
+}
+
+.respiration .trace {
+  stroke: #315f99;
+  stroke-width: 2.5;
+}
+
+.axis {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.15rem 0.75rem 0.55rem;
+  color: #748682;
+  font-size: 0.67rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.unavailable {
+  display: grid;
+  min-height: 13rem;
+  place-content: center;
+  justify-items: center;
+  gap: 0.35rem;
+  padding: 1.5rem;
+  border: 1px dashed #c4cecc;
+  border-radius: 12px;
+  background: #f8faf9;
+  color: #657672;
+  text-align: center;
+}
+
+.unavailableLine {
+  width: 6rem;
+  height: 1px;
+  margin-bottom: 0.55rem;
+  background: #aebbb8;
+}
+
+.unavailable strong {
+  color: #334a46;
+  font-size: 0.9rem;
+}
+
+.unavailable span:last-child {
+  font-size: 0.76rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .trace {
+    animation: trace-in 700ms ease-out both;
+  }
+}
+
+@keyframes trace-in {
+  from {
+    opacity: 0.5;
+    stroke-dasharray: 8 3;
+  }
+
+  to {
+    opacity: 1;
+    stroke-dasharray: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .chart,
+  .unavailable {
+    min-height: 10.6rem;
+  }
+
+  .svg {
+    height: 9rem;
+  }
+}
+

@@ -1,0 +1,58 @@
+.monitor-trend {
+  --trend-color: #176447;
+
+  align-items: center;
+  color: var(--trend-color);
+  display: inline-flex;
+  gap: 0.42rem;
+  min-width: 0;
+}
+
+.monitor-trend--above,
+.monitor-trend--below {
+  --trend-color: #b52832;
+}
+
+.monitor-trend--unavailable {
+  --trend-color: #687783;
+}
+
+.monitor-trend__icon {
+  flex: 0 0 auto;
+  height: 1.5rem;
+  overflow: visible;
+  width: 2.125rem;
+}
+
+.monitor-trend__icon path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.6;
+}
+
+.monitor-trend__icon polygon {
+  fill: currentColor;
+}
+
+.monitor-trend__delta {
+  color: currentColor;
+  font-size: 0.83rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 750;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .monitor-trend__icon {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .monitor-trend {
+    color: CanvasText;
+  }
+}

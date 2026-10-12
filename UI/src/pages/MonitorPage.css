@@ -1,0 +1,346 @@
+.monitor-page {
+  width: min(100% - 48px, 1440px);
+  margin: 0 auto;
+  padding: 24px 0 72px;
+}
+
+.monitor-page .monitor-connection-bar {
+  margin-bottom: 18px;
+}
+
+.monitor-page__history-link {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  padding: 7px 11px;
+  border: 1px solid #d4dfdc;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #29433e;
+  background: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  gap: 6px;
+}
+
+.monitor-page__history-link svg {
+  width: 15px;
+  height: 15px;
+}
+
+.monitor-page__offline {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 14px 18px;
+  border: 1px solid #9aa6b4;
+  border-radius: 13px;
+  color: #fff;
+  background: #344253;
+  box-shadow: 0 8px 22px rgba(52, 66, 83, 0.2);
+  gap: 13px;
+}
+
+.monitor-page__offline > svg {
+  width: 23px;
+  height: 23px;
+  flex: 0 0 auto;
+}
+
+.monitor-page__offline div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 11px;
+}
+
+.monitor-page__offline strong {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+
+.monitor-page__offline span {
+  color: #dde4eb;
+  font-size: 0.82rem;
+}
+
+.monitor-page__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 344px;
+  align-items: start;
+  gap: 20px;
+}
+
+.monitor-page__primary {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.monitor-page__vitals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.monitor-page__rail {
+  position: sticky;
+  top: 92px;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.monitor-page__rail .monitor-patient {
+  grid-template-columns: 1fr;
+  padding: 0;
+  border-color: var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.monitor-page__rail .monitor-patient__photo {
+  width: 100%;
+  height: 205px;
+  min-height: 0;
+  aspect-ratio: auto;
+  border-radius: 0;
+}
+
+.monitor-page__rail .monitor-patient__photo img {
+  object-position: center 29%;
+}
+
+.monitor-page__rail .monitor-patient__content {
+  padding: 4px 19px 20px;
+}
+
+.sensor-summary,
+.range-summary {
+  padding: 18px;
+}
+
+.sensor-summary__heading,
+.range-summary__heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  gap: 12px;
+}
+
+.sensor-summary__heading .eyebrow,
+.range-summary__heading .eyebrow {
+  margin-bottom: 4px;
+  font-size: 0.64rem;
+}
+
+.sensor-summary__heading h2,
+.range-summary__heading h2 {
+  margin-bottom: 0;
+  font-size: 1rem;
+}
+
+.sensor-summary__heading > svg,
+.range-summary__heading > svg {
+  width: 20px;
+  height: 20px;
+  color: var(--brand);
+}
+
+.sensor-summary dl,
+.range-summary dl {
+  display: flex;
+  margin: 0;
+  flex-direction: column;
+}
+
+.sensor-summary dl > div,
+.range-summary dl > div {
+  display: flex;
+  min-height: 43px;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  gap: 12px;
+}
+
+.sensor-summary dt,
+.range-summary dt {
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted-strong);
+  font-size: 0.76rem;
+  font-weight: 600;
+  gap: 6px;
+}
+
+.sensor-summary dt svg {
+  width: 14px;
+  height: 14px;
+  color: var(--muted);
+}
+
+.sensor-summary dd,
+.range-summary dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.range-summary__heading {
+  justify-content: flex-start;
+}
+
+.range-summary > p {
+  display: flex;
+  align-items: flex-start;
+  margin: 12px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  gap: 7px;
+}
+
+.range-summary > p svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: var(--brand);
+}
+
+.clinical-details-cta {
+  display: grid;
+  width: 100%;
+  min-height: 88px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  padding: 16px 18px;
+  border: 1px solid #bbd3cc;
+  border-radius: 15px;
+  cursor: pointer;
+  color: var(--ink);
+  background: linear-gradient(105deg, #f1f8f6, #fff);
+  box-shadow: var(--shadow-sm);
+  gap: 14px;
+  text-align: left;
+}
+
+.clinical-details-cta:hover {
+  border-color: #8eb9ad;
+  box-shadow: 0 8px 25px rgba(11, 97, 89, 0.1);
+}
+
+.clinical-details-cta__icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 12px;
+  color: #fff;
+  background: var(--brand);
+}
+
+.clinical-details-cta__icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.clinical-details-cta > span:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.clinical-details-cta strong {
+  font-size: 0.9rem;
+}
+
+.clinical-details-cta small {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.clinical-details-cta > svg {
+  width: 19px;
+  height: 19px;
+  color: var(--brand);
+}
+
+@media (max-width: 1040px) {
+  .monitor-page__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .monitor-page__rail {
+    position: static;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) repeat(2, minmax(0, 1fr));
+  }
+
+  .monitor-page__rail .monitor-patient {
+    grid-template-columns: 112px minmax(0, 1fr);
+  }
+
+  .monitor-page__rail .monitor-patient__photo {
+    height: 100%;
+    min-height: 170px;
+  }
+
+  .monitor-page__rail .monitor-patient__content {
+    padding: 18px 16px 18px 0;
+  }
+}
+
+@media (max-width: 800px) {
+  .monitor-page {
+    width: min(100% - 28px, 1440px);
+    padding-top: 14px;
+  }
+
+  .monitor-page__rail {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .monitor-page__rail .monitor-patient {
+    grid-column: 1 / -1;
+  }
+
+  .monitor-page__vitals {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .monitor-page__rail {
+    grid-template-columns: 1fr;
+  }
+
+  .monitor-page__rail .monitor-patient {
+    grid-template-columns: 92px minmax(0, 1fr);
+  }
+
+  .monitor-page__rail .monitor-patient__photo {
+    min-height: 148px;
+  }
+
+  .monitor-page__offline {
+    align-items: flex-start;
+  }
+
+  .clinical-details-cta {
+    padding: 14px;
+  }
+
+  .clinical-details-cta small {
+    display: none;
+  }
+}
