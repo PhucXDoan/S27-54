@@ -6,19 +6,31 @@ import type {
   ScenarioId,
   TrendDirection,
   VitalKind,
+  VitalReading,
 } from '../types/monitoring'
 
 export type FoalOverallStatus = 'clinical-alert' | 'equipment-alert' | 'offline' | 'monitoring'
 
 export const getRangeStatus = (
   value: number | null,
-  range: Pick<DemonstrationRange, 'min' | 'max'>,
+  range: Pick<DemonstrationRange, 'min' | 'max'> & { buffer?: number },
 ): RangeStatus => {
-  if (value === null || !Number.isFinite(value)) return 'unavailable'
-  if (value < range.min) return 'below'
-  if (value > range.max) return 'above'
+  if (value === null || !Number.isFinite(value) || value < 0) return 'unavailable'
+  const buffer = range.buffer ?? 0
+  if (!Number.isFinite(range.min) || !Number.isFinite(range.max) || range.min >= range.max || !Number.isFinite(buffer) || buffer < 0) return 'unavailable'
+  if (value < range.min - buffer) return 'below'
+  if (value > range.max + buffer) return 'above'
+  if (value < range.min || value > range.max) return 'buffer'
   return 'within'
 }
+
+export const getReadingRangeStatus = (
+  reading: VitalReading,
+  range: Pick<DemonstrationRange, 'min' | 'max'> & { buffer?: number },
+): RangeStatus =>
+  reading.isStale || reading.signalQuality === 'poor' || reading.signalQuality === 'unavailable'
+    ? 'unavailable'
+    : getRangeStatus(reading.value, range)
 
 export const getRangeForVital = (kind: VitalKind): DemonstrationRange =>
   kind === 'heartRate' ? DEMONSTRATION_RANGES.heartRate : DEMONSTRATION_RANGES.respirationRate

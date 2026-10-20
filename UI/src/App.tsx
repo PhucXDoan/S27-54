@@ -56,6 +56,9 @@ function PatientRoute({ service, view }: PatientRouteProps) {
     <MonitorPage
       foal={foal}
       onAcknowledgeAlert={(alertId) => service.acknowledgeAlert(foal.id, alertId)}
+      onApplyMonitoringSettings={(settings) => service.applyMonitoringSettings(foal.id, settings)}
+      onSaveMonitoringSettingsDraft={(settings) => service.saveMonitoringSettingsDraft(foal.id, settings)}
+      settingsPersistenceAvailable={service.getSettingsPersistenceStatus() === 'available'}
     />
   )
 }

@@ -6,6 +6,7 @@ import { TrendArrow } from './TrendArrow'
 import {
   createTrendAccessibleLabel,
   formatClockTime,
+  getReadingRangeStatus,
   rangeStatusLabels,
   rangeStatusTones,
   signalQualityLabels,
@@ -39,18 +40,26 @@ export function VitalSignCard({
   trendAccessibleLabel,
   className = '',
 }: VitalSignCardProps) {
-  const isUnavailable = reading.value === null || reading.status === 'unavailable'
+  const status = getReadingRangeStatus(reading)
+  const hasNumericValue = reading.value !== null && Number.isFinite(reading.value)
+  // A finite retained value remains visible, but never receives a live range status.
+  const isUnavailable = !hasNumericValue || (!reading.isStale && status === 'unavailable')
+  const statusLabel = reading.isStale && hasNumericValue
+    ? 'Stale reading'
+    : reading.signalQuality === 'poor'
+      ? 'Poor signal'
+      : rangeStatusLabels[status]
   const headingId = `vital-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
   const lastReadingText =
     latestReadingLabel ?? formatClockTime(reading.lastValidAt)
   const accessibleTrend =
-    trendAccessibleLabel ??
+    (status !== 'unavailable' ? trendAccessibleLabel : undefined) ??
     createTrendAccessibleLabel(
       label,
       reading.trend,
       reading.delta,
       reading.unit,
-      reading.status,
+      status,
     )
 
   return (
@@ -60,8 +69,8 @@ export function VitalSignCard({
     >
       <div className="monitor-vital-card__header">
         <h2 id={headingId}>{label}</h2>
-        <StatusBadge tone={rangeStatusTones[reading.status]}>
-          {rangeStatusLabels[reading.status]}
+        <StatusBadge tone={rangeStatusTones[status]}>
+          {statusLabel}
         </StatusBadge>
       </div>
 
@@ -81,7 +90,7 @@ export function VitalSignCard({
           </div>
           <TrendArrow
             direction={reading.trend}
-            status={reading.status}
+            status={status}
             delta={reading.delta}
             deltaUnit={reading.unit}
             accessibleLabel={accessibleTrend}

@@ -86,8 +86,9 @@ export const formatVitalDelta = (delta: number | null, unit: VitalUnit): string 
 export const formatRangeStatus = (status: RangeStatus): string => {
   const labels: Record<RangeStatus, string> = {
     within: 'Within configured range',
-    above: 'Above configured range',
-    below: 'Below configured range',
+    buffer: 'Outside range, within alert buffer',
+    above: 'Beyond alert limit',
+    below: 'Beyond alert limit',
     unavailable: 'Signal unavailable',
   }
   return labels[status]

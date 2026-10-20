@@ -1,4 +1,5 @@
 import { DEMONSTRATION_RANGES } from '../config/demonstrationRanges'
+import { cloneMonitoringSettings, validateMonitoringSettings } from '../config/monitoringSettings'
 import {
   createClinicalSeries,
   createInitialFoals,
@@ -14,6 +15,7 @@ import type {
   Foal,
   MonitoringListener,
   MonitoringSnapshot,
+  MonitoringSettings,
   RangeStatus,
   Scenario,
   ScenarioId,
@@ -22,7 +24,8 @@ import type {
   VitalReading,
   VitalUnit,
 } from '../types/monitoring'
-import { getRangeForVital, getRangeStatus, getTrendDirection } from '../utils/monitoringStatus'
+import { getRangeForVital, getRangeStatus, getReadingRangeStatus, getTrendDirection } from '../utils/monitoringStatus'
+import { MonitoringSettingsStore, type MonitoringSettingsStorage } from './monitoringSettingsStorage'
 
 export interface MockFoalServiceOptions {
   initialFoals?: Foal[]
@@ -30,6 +33,7 @@ export interface MockFoalServiceOptions {
   updateIntervalMs?: number
   now?: () => Date
   startOnSubscribe?: boolean
+  storage?: MonitoringSettingsStorage | null
 }
 
 const NORMAL_TARGETS: Record<string, { heartRate: number; respirationRate: number }> = {
@@ -113,26 +117,26 @@ const alertDetails = (
     'high-heart-rate': {
       category: 'physiological',
       severity: 'critical',
-      title: 'Heart rate above demonstration range',
-      message: 'Heart rate is above the configured demonstration range.',
+      title: 'Heart rate beyond upper alert limit',
+      message: 'Heart rate is above the configured range and alert buffer.',
     },
     'low-heart-rate': {
       category: 'physiological',
       severity: 'critical',
-      title: 'Heart rate below demonstration range',
-      message: 'Heart rate is below the configured demonstration range.',
+      title: 'Heart rate beyond lower alert limit',
+      message: 'Heart rate is below the configured range and alert buffer.',
     },
     'high-respiration-rate': {
       category: 'physiological',
       severity: 'critical',
-      title: 'Respiration above demonstration range',
-      message: 'Respiration has remained above the configured demonstration range for 45 seconds.',
+      title: 'Respiration beyond upper alert limit',
+      message: 'Respiration is above the configured range and alert buffer.',
     },
     'low-respiration-rate': {
       category: 'physiological',
       severity: 'critical',
-      title: 'Respiration below demonstration range',
-      message: 'Respiration is below the configured demonstration range.',
+      title: 'Respiration beyond lower alert limit',
+      message: 'Respiration is below the configured range and alert buffer.',
     },
     'ecg-signal-unavailable': {
       category: 'equipment',
@@ -257,6 +261,85 @@ const makeActivity = (
   ...(alertId ? { alertId } : {}),
 })
 
+/** Re-evaluate the existing readings; settings never drive simulated measurements. */
+const evaluateFoalMonitoring = (
+  foal: Foal,
+  timestamp: string,
+  source: 'measurement' | 'settings' = 'measurement',
+  acknowledgeNew = false,
+): Foal => {
+  const statusFor = (kind: VitalKind): RangeStatus => {
+    const sensorUnavailable = kind === 'heartRate'
+      ? foal.electrodeStatus !== 'connected'
+      : foal.respirationSensorStatus === 'disconnected' || foal.respirationSensorStatus === 'unavailable'
+    if (foal.connectionStatus === 'offline' || sensorUnavailable) return 'unavailable'
+    return getReadingRangeStatus(foal.measurement[kind], foal.monitoringSettings[kind])
+  }
+  const heartStatus = statusFor('heartRate')
+  const respirationStatus = statusFor('respirationRate')
+  const desiredKinds = new Set<AlertKind>()
+  if (heartStatus === 'above') desiredKinds.add('high-heart-rate')
+  if (heartStatus === 'below') desiredKinds.add('low-heart-rate')
+  if (respirationStatus === 'above') desiredKinds.add('high-respiration-rate')
+  if (respirationStatus === 'below') desiredKinds.add('low-respiration-rate')
+
+  const removedIds = new Set(foal.alerts
+    .filter((item) => item.category === 'physiological' && !desiredKinds.has(item.kind))
+    .map((item) => item.id))
+  let next: Foal = {
+    ...foal,
+    measurement: {
+      ...foal.measurement,
+      heartRate: { ...foal.measurement.heartRate, status: heartStatus },
+      respirationRate: { ...foal.measurement.respirationRate, status: respirationStatus },
+    },
+    alerts: foal.alerts.filter((item) => !removedIds.has(item.id)),
+    activity: foal.activity.map((item) => item.alertId && removedIds.has(item.alertId)
+      ? {
+          ...item,
+          status: 'resolved',
+          description: source === 'settings'
+            ? `${item.description} Alert eligibility cleared by updated monitoring settings; no new measurement was taken.`
+            : item.description,
+        }
+      : item),
+  }
+
+  for (const kind of desiredKinds) {
+    if (next.alerts.some((item) => item.kind === kind && item.status === 'active')) continue
+    const newAlert = alertDetails(next, kind, timestamp, acknowledgeNew)
+    newAlert.id = `${newAlert.id}-${timestamp}`
+    next = { ...next, alerts: [...next.alerts, newAlert] }
+    next = prependActivity(next, makeActivity(
+      next,
+      timestamp,
+      activityTypeForAlert(kind),
+      'clinical',
+      source === 'settings'
+        ? `Updated monitoring settings make the existing reading eligible for a simulated alert. ${newAlert.message} No new measurement was taken.`
+        : newAlert.message,
+      'active',
+      newAlert.id,
+    ))
+    if (acknowledgeNew) {
+      next = markRelatedActivityAcknowledged(next, newAlert.id, timestamp, 'Demo clinician')
+      const acknowledgement = makeActivity(
+        next,
+        timestamp,
+        'alert-acknowledged',
+        'staff',
+        `${newAlert.title} acknowledged by Demo clinician; the condition remains active.`,
+        'acknowledged',
+        newAlert.id,
+      )
+      acknowledgement.acknowledgedAt = timestamp
+      acknowledgement.acknowledgedBy = 'Demo clinician'
+      next = prependActivity(next, acknowledgement)
+    }
+  }
+  return next
+}
+
 const appendTrendPoint = (
   points: Foal['clinicalSeries']['heartRateTrend'],
   timestamp: string,
@@ -376,9 +459,9 @@ const applyScenario = (foal: Foal, scenario: ScenarioId, timestamp: string): Foa
   }
 
   const alertKind = activeAlertForScenario(scenario)
-  if (alertKind) {
-    const acknowledged = scenario === 'acknowledged'
-    const scenarioAlert = alertDetails(next, alertKind, timestamp, acknowledged)
+  // Physiological eligibility follows the active settings, not the scenario name.
+  if (alertKind && alertDetails(next, alertKind, timestamp).category !== 'physiological') {
+    const scenarioAlert = alertDetails(next, alertKind, timestamp)
     next = { ...next, alerts: [scenarioAlert] }
     next = prependActivity(
       next,
@@ -392,26 +475,6 @@ const applyScenario = (foal: Foal, scenario: ScenarioId, timestamp: string): Foa
         scenarioAlert.id,
       ),
     )
-    if (acknowledged) {
-      next = markRelatedActivityAcknowledged(
-        next,
-        scenarioAlert.id,
-        timestamp,
-        'Demo clinician',
-      )
-      const acknowledgement = makeActivity(
-        next,
-        timestamp,
-        'alert-acknowledged',
-        'staff',
-        `${scenarioAlert.title} acknowledged by Demo clinician; the condition remains active.`,
-        'acknowledged',
-        scenarioAlert.id,
-      )
-      acknowledgement.acknowledgedAt = timestamp
-      acknowledgement.acknowledgedBy = 'Demo clinician'
-      next = prependActivity(next, acknowledgement)
-    }
   }
 
   if (previousConnection === 'offline' && scenario !== 'offline') {
@@ -471,7 +534,7 @@ const applyScenario = (foal: Foal, scenario: ScenarioId, timestamp: string): Foa
     }
   }
 
-  return next
+  return evaluateFoalMonitoring(next, timestamp, 'measurement', scenario === 'acknowledged')
 }
 
 const advanceMovement = (foal: Foal, tick: number, timestamp: string): Foal => {
@@ -530,7 +593,7 @@ const advanceMovement = (foal: Foal, tick: number, timestamp: string): Foal => {
 
 const advanceFoal = (foal: Foal, scenario: ScenarioId, tick: number, timestamp: string): Foal => {
   if (scenario === 'offline') {
-    return {
+    return evaluateFoalMonitoring({
       ...foal,
       connectionStatus: 'offline',
       measurement: {
@@ -538,7 +601,7 @@ const advanceFoal = (foal: Foal, scenario: ScenarioId, tick: number, timestamp: 
         heartRate: { ...foal.measurement.heartRate, isStale: true },
         respirationRate: { ...foal.measurement.respirationRate, isStale: true },
       },
-    }
+    }, timestamp)
   }
 
   const targets = valuesForScenario(foal, scenario)
@@ -594,7 +657,7 @@ const advanceFoal = (foal: Foal, scenario: ScenarioId, tick: number, timestamp: 
     },
   }
 
-  return advanceMovement(next, tick, timestamp)
+  return evaluateFoalMonitoring(advanceMovement(next, tick, timestamp), timestamp)
 }
 
 export class MockFoalService {
@@ -604,14 +667,17 @@ export class MockFoalService {
   private readonly now: () => Date
   private readonly updateIntervalMs: number
   private readonly startOnSubscribe: boolean
+  private readonly settingsStore: MonitoringSettingsStore
 
   constructor(options: MockFoalServiceOptions = {}) {
     this.now = options.now ?? (() => new Date())
     this.updateIntervalMs = options.updateIntervalMs ?? DEMONSTRATION_RANGES.updateIntervalMs
     this.startOnSubscribe = options.startOnSubscribe ?? true
+    this.settingsStore = new MonitoringSettingsStore(options.storage)
     const createdAt = this.now()
     this.snapshot = {
-      foals: cloneFoals(options.initialFoals ?? createInitialFoals(createdAt)),
+      foals: cloneFoals(options.initialFoals ?? createInitialFoals(createdAt)).map((foal) =>
+        evaluateFoalMonitoring(this.settingsStore.load(foal), createdAt.toISOString(), 'settings')),
       scenarioByFoalId: {
         ...DEFAULT_SCENARIO_BY_FOAL_ID,
         ...options.initialScenarios,
@@ -653,6 +719,53 @@ export class MockFoalService {
   getScenario = (foalId: string): ScenarioId => this.snapshot.scenarioByFoalId[foalId] ?? 'normal'
 
   getScenarios = (): readonly Scenario[] => MOCK_SCENARIOS
+
+  getSettingsPersistenceStatus = (): 'available' | 'unavailable' => this.settingsStore.getStatus()
+
+  saveMonitoringSettingsDraft = (foalId: string, settings: MonitoringSettings): boolean => {
+    if (Object.keys(validateMonitoringSettings(settings)).length > 0) return false
+    const index = this.snapshot.foals.findIndex((foal) => foal.id === foalId)
+    const current = this.snapshot.foals[index]
+    if (!current) return false
+    const next: Foal = { ...current, monitoringSettingsDraft: cloneMonitoringSettings(settings) }
+    this.settingsStore.save(next)
+    const foals = [...this.snapshot.foals]
+    foals[index] = next
+    this.commit({ ...this.snapshot, foals, updatedAt: this.now().toISOString() })
+    return true
+  }
+
+  applyMonitoringSettings = (foalId: string, settings: MonitoringSettings): boolean => {
+    if (Object.keys(validateMonitoringSettings(settings)).length > 0) return false
+    const index = this.snapshot.foals.findIndex((foal) => foal.id === foalId)
+    const current = this.snapshot.foals[index]
+    if (!current) return false
+    const timestamp = this.now().toISOString()
+    const oldSettings = cloneMonitoringSettings(current.monitoringSettings)
+    const newSettings = cloneMonitoringSettings(settings)
+    let next = evaluateFoalMonitoring({
+      ...current,
+      monitoringSettings: newSettings,
+      monitoringSettingsDraft: null,
+    }, timestamp, 'settings')
+    const summary = (values: MonitoringSettings): string =>
+      `heart rate ${values.heartRate.min}–${values.heartRate.max} bpm (buffer ${values.heartRate.buffer} bpm); respiration ${values.respirationRate.min}–${values.respirationRate.max} breaths/min (buffer ${values.respirationRate.buffer} breaths/min)`
+    const event = makeActivity(
+      next,
+      timestamp,
+      'monitoring-settings-applied',
+      'staff',
+      `Monitoring settings applied for ${current.name}, session ${current.sessionId}. Previous: ${summary(oldSettings)}. Active: ${summary(newSettings)}. This records a settings change; no new measurement was taken.`,
+    )
+    event.sessionId = current.sessionId
+    event.monitoringSettingsChange = { oldSettings, newSettings: cloneMonitoringSettings(newSettings) }
+    next = prependActivity(next, event)
+    this.settingsStore.save(next)
+    const foals = [...this.snapshot.foals]
+    foals[index] = next
+    this.commit({ ...this.snapshot, foals, updatedAt: timestamp })
+    return true
+  }
 
   /** Runs one deterministic update immediately; also useful for fake-clock tests. */
   advance = (): void => {
@@ -758,7 +871,8 @@ export class MockFoalService {
   reset = (): void => {
     const now = this.now()
     this.commit({
-      foals: createInitialFoals(now),
+      foals: createInitialFoals(now).map((foal) =>
+        evaluateFoalMonitoring(this.settingsStore.load(foal), now.toISOString(), 'settings')),
       scenarioByFoalId: { ...DEFAULT_SCENARIO_BY_FOAL_ID },
       updatedAt: now.toISOString(),
       tick: 0,

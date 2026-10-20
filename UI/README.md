@@ -51,6 +51,16 @@ The control is intentionally separated from the clinical UI. In a production bui
 
 Mock state is held in memory. Scenario selections and alert acknowledgements therefore reset after a full page reload.
 
+## Manual monitoring ranges
+
+Open a foal's monitor and select **Edit** in the existing **Demonstration ranges** card. Adjust the lower and upper handles or their linked number fields. Expand **Alert buffer** to set a symmetric, nonnegative buffer for each measurement; the buffer is a value allowance, not a waiting time.
+
+**Apply now** activates valid settings for that foal/session, clears its draft, re-evaluates the existing readings, and records the previous and new settings in activity history. **Save for later** stores a pending draft without changing active monitoring or scheduling activation. **Resume draft** reopens it; **Cancel** preserves the last explicitly saved draft.
+
+Active settings and drafts are stored in this browser's local storage, keyed by foal and prototype session ID. If storage is unavailable, the card explains that they will last only for the open session. Settings are not sent to real hardware.
+
+Statuses use both color and text: green inside the configured range, amber outside the range but within the inclusive buffer boundaries, and red beyond the alert limit. Only red readings are eligible for physiological simulated alerts. Unavailable, stale, or poor-signal measurements do not receive a normal physiological status.
+
 ## Architecture
 
 - `src/pages/` — route-level overview, monitor, and history views.
@@ -60,9 +70,11 @@ Mock state is held in memory. Scenario selections and alert acknowledgements the
 - `src/types/monitoring.ts` — typed domain model.
 - `src/data/mockFoals.ts` — initial patients, events, waveform fixtures, and scenario catalog.
 - `src/services/mockFoalService.ts` — subscription-based simulation, scenario changes, alert acknowledgement, and gradual updates.
-- `src/config/demonstrationRanges.ts` — the single source for configurable demonstration limits and update timing.
+- `src/config/demonstrationRanges.ts` — default demonstration limits and update timing.
+- `src/config/monitoringSettings.ts` — centralized editor bounds, defaults, and field validation.
+- `src/services/monitoringSettingsStorage.ts` — per-foal/session browser persistence for active settings and drafts.
 - `src/utils/` — formatting and status/trend mapping.
 
 ## Future integration points
 
-Replace `mockFoalService` with a real API-backed service that exposes the same snapshot/subscription boundary; presentation components do not depend on transport details. A future safe-range settings page should read and update the configuration represented by `src/config/demonstrationRanges.ts` through that API. No settings UI is included in this prototype.
+Replace `mockFoalService` with a real API-backed service that exposes the same snapshot/subscription boundary; presentation components do not depend on transport details. The compact in-card range editor currently updates prototype session settings through that service. Any future API can replace browser persistence and use the same typed settings and centralized validation.

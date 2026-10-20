@@ -13,6 +13,10 @@
   --trend-color: #b52832;
 }
 
+.monitor-trend--buffer {
+  --trend-color: #835200;
+}
+
 .monitor-trend--unavailable {
   --trend-color: #687783;
 }

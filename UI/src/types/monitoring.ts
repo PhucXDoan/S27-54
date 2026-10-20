@@ -29,11 +29,22 @@ export type Posture =
   | 'unavailable'
 export type MovementState = Posture
 
-export type RangeStatus = 'within' | 'above' | 'below' | 'unavailable'
+export type RangeStatus = 'within' | 'buffer' | 'above' | 'below' | 'unavailable'
 export type VitalStatus = RangeStatus
 export type TrendDirection = 'up' | 'down' | 'stable'
 export type VitalUnit = 'bpm' | 'breaths/min'
 export type VitalKind = 'heartRate' | 'respirationRate'
+
+export interface MonitoringRange {
+  min: number
+  max: number
+  buffer: number
+}
+
+export interface MonitoringSettings {
+  heartRate: MonitoringRange
+  respirationRate: MonitoringRange
+}
 
 export interface VitalReading {
   value: number | null
@@ -116,6 +127,7 @@ export type ActivityType =
   | 'alert-acknowledged'
   | 'patient-checked'
   | 'staff-note'
+  | 'monitoring-settings-applied'
 
 export type ActivityCategory = 'movement' | 'clinical' | 'equipment' | 'staff'
 export type ActivityStatus = 'active' | 'resolved' | 'recorded' | 'acknowledged'
@@ -131,6 +143,11 @@ export interface Activity {
   alertId?: string
   acknowledgedAt?: ISODateString
   acknowledgedBy?: string
+  sessionId?: string
+  monitoringSettingsChange?: {
+    oldSettings: MonitoringSettings
+    newSettings: MonitoringSettings
+  }
 }
 
 export type ActivityEvent = Activity
@@ -155,6 +172,9 @@ export interface ClinicalSeries {
 
 export interface Foal {
   id: string
+  sessionId: string
+  monitoringSettings: MonitoringSettings
+  monitoringSettingsDraft: MonitoringSettings | null
   patientId: string
   name: string
   mareName: string

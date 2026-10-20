@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 
 import { TrendArrow } from './TrendArrow'
+import { createTrendAccessibleLabel } from './presentation'
 
 describe('TrendArrow', () => {
   it('exposes direction, range status, accessible context, and a signed delta', () => {
@@ -9,13 +10,13 @@ describe('TrendArrow', () => {
         direction="up"
         status="above"
         delta={3}
-        accessibleLabel="Heart rate increased by 3 bpm and is above the configured range."
+        accessibleLabel="Heart rate increased by 3 bpm and is beyond the upper alert limit."
       />,
     )
 
     expect(
       screen.getByRole('img', {
-        name: 'Heart rate increased by 3 bpm and is above the configured range.',
+        name: 'Heart rate increased by 3 bpm and is beyond the upper alert limit.',
       }),
     ).toBeInTheDocument()
     expect(screen.getByText('+3 bpm')).toBeInTheDocument()
@@ -61,5 +62,26 @@ describe('TrendArrow', () => {
     )
 
     expect(screen.getByText('\u22122 breaths/min')).toBeInTheDocument()
+  })
+
+  it.each([
+    { direction: 'down', delta: -3, status: 'within', phrase: 'within the configured range' },
+    { direction: 'up', delta: 3, status: 'buffer', phrase: 'within the alert buffer' },
+    { direction: 'down', delta: -3, status: 'buffer', phrase: 'within the alert buffer' },
+    { direction: 'up', delta: 3, status: 'above', phrase: 'beyond the upper alert limit' },
+    { direction: 'down', delta: -3, status: 'below', phrase: 'beyond the lower alert limit' },
+  ] as const)('keeps $direction direction independent of $status status', ({ direction, delta, status, phrase }) => {
+    const { container } = render(
+      <TrendArrow
+        direction={direction}
+        status={status}
+        delta={delta}
+        accessibleLabel={createTrendAccessibleLabel('Heart rate', direction, delta, 'bpm', status)}
+      />,
+    )
+
+    expect(container.firstChild).toHaveClass(`monitor-trend--${status}`)
+    expect(container.firstChild).toHaveAttribute('data-direction', direction)
+    expect(screen.getByRole('img')).toHaveAccessibleName(new RegExp(phrase))
   })
 })
