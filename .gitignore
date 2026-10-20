@@ -2,6 +2,9 @@ build/
 .history/
 dist/
 node_modules/
+.vite/
 *.kicad_prl
 *.pdf
+*.local
+*.log
 ~*
