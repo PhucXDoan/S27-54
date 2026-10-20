@@ -1,4 +1,5 @@
 import { DEMONSTRATION_RANGES } from '../config/demonstrationRanges'
+import { createDefaultMonitoringSettings } from '../config/monitoringSettings'
 import type {
   Activity,
   Alert,
@@ -170,6 +171,9 @@ export const createInitialFoals = (now = new Date()): Foal[] => {
   return [
     {
       id: 'luna',
+      sessionId: 'luna-demo-session-1',
+      monitoringSettings: createDefaultMonitoringSettings(),
+      monitoringSettingsDraft: null,
       patientId: 'F-2407',
       name: 'Luna',
       mareName: 'Silver Fern',
@@ -231,6 +235,9 @@ export const createInitialFoals = (now = new Date()): Foal[] => {
     },
     {
       id: 'maple',
+      sessionId: 'maple-demo-session-1',
+      monitoringSettings: createDefaultMonitoringSettings(),
+      monitoringSettingsDraft: null,
       patientId: 'F-2411',
       name: 'Maple',
       mareName: 'Autumn Song',
@@ -305,6 +312,9 @@ export const createInitialFoals = (now = new Date()): Foal[] => {
     },
     {
       id: 'orion',
+      sessionId: 'orion-demo-session-1',
+      monitoringSettings: createDefaultMonitoringSettings(),
+      monitoringSettingsDraft: null,
       patientId: 'F-2414',
       name: 'Orion',
       mareName: 'Northern Light',

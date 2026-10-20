@@ -1,17 +1,16 @@
 import {
   Activity,
   ArrowUpRight,
-  CheckCircle2,
   CircleDot,
   FileClock,
   Gauge,
   HeartPulse,
   Radio,
-  Settings2,
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 import { RecentActivity } from '../components/activity'
+import { MonitoringRangeCard } from '../components/configuration/MonitoringRangeCard'
 import {
   AlertList,
   ConnectionBar,
@@ -20,11 +19,7 @@ import {
   StatusBadge,
   VitalSignCard,
 } from '../components/monitoring'
-import {
-  DEMONSTRATION_RANGES,
-  DEMONSTRATION_RANGE_DISCLAIMER,
-} from '../config/demonstrationRanges'
-import type { Foal } from '../types/monitoring'
+import type { Foal, MonitoringSettings } from '../types/monitoring'
 import {
   formatAge,
   formatExactTime,
@@ -37,6 +32,9 @@ import './MonitorPage.css'
 interface MonitorPageProps {
   foal: Foal
   onAcknowledgeAlert: (alertId: string) => void
+  onApplyMonitoringSettings: (settings: MonitoringSettings) => boolean
+  onSaveMonitoringSettingsDraft: (settings: MonitoringSettings) => boolean
+  settingsPersistenceAvailable: boolean
   now?: Date
 }
 
@@ -46,7 +44,14 @@ function statusTone(status: string) {
   return 'critical' as const
 }
 
-export function MonitorPage({ foal, onAcknowledgeAlert, now = new Date() }: MonitorPageProps) {
+export function MonitorPage({
+  foal,
+  onAcknowledgeAlert,
+  onApplyMonitoringSettings,
+  onSaveMonitoringSettingsDraft,
+  settingsPersistenceAvailable,
+  now = new Date(),
+}: MonitorPageProps) {
   const navigate = useNavigate()
   const activeAlerts = foal.alerts.filter((alert) => alert.status === 'active')
   const movementIsStale = foal.connectionStatus === 'offline'
@@ -221,33 +226,15 @@ export function MonitorPage({ foal, onAcknowledgeAlert, now = new Date() }: Moni
             </dl>
           </section>
 
-          <section className="range-summary panel" aria-labelledby="range-summary-title">
-            <div className="range-summary__heading">
-              <Settings2 aria-hidden="true" />
-              <div>
-                <p className="eyebrow">Prototype configuration</p>
-                <h2 id="range-summary-title">Demonstration ranges</h2>
-              </div>
-            </div>
-            <dl>
-              <div>
-                <dt>Heart rate</dt>
-                <dd>
-                  {DEMONSTRATION_RANGES.heartRate.min}–{DEMONSTRATION_RANGES.heartRate.max} bpm
-                </dd>
-              </div>
-              <div>
-                <dt>Respiration</dt>
-                <dd>
-                  {DEMONSTRATION_RANGES.respirationRate.min}–
-                  {DEMONSTRATION_RANGES.respirationRate.max} breaths/min
-                </dd>
-              </div>
-            </dl>
-            <p>
-              <CheckCircle2 aria-hidden="true" /> {DEMONSTRATION_RANGE_DISCLAIMER}
-            </p>
-          </section>
+          <MonitoringRangeCard
+            key={`${foal.id}:${foal.sessionId}`}
+            foalName={foal.name}
+            active={foal.monitoringSettings}
+            draft={foal.monitoringSettingsDraft}
+            persistenceAvailable={settingsPersistenceAvailable}
+            onApply={onApplyMonitoringSettings}
+            onSaveDraft={onSaveMonitoringSettingsDraft}
+          />
         </aside>
       </div>
     </main>

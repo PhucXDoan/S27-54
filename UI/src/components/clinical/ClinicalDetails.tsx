@@ -10,7 +10,7 @@ import {
   Waves,
 } from 'lucide-react'
 import type { ComponentType, ReactNode } from 'react'
-import { DEMONSTRATION_RANGES, DEMONSTRATION_RANGE_DISCLAIMER } from '../../config/demonstrationRanges'
+import { DEMONSTRATION_RANGE_DISCLAIMER } from '../../config/demonstrationRanges'
 import type { ElectrodeStatus, Foal, SensorStatus, SignalQuality, VitalReading } from '../../types/monitoring'
 import {
   formatExactTime,
@@ -291,8 +291,8 @@ export function ClinicalDetails({
             kind="heartRate"
             points={foal.clinicalSeries.heartRateTrend}
             range={{
-              minimum: DEMONSTRATION_RANGES.heartRate.min,
-              maximum: DEMONSTRATION_RANGES.heartRate.max,
+              minimum: foal.monitoringSettings.heartRate.min,
+              maximum: foal.monitoringSettings.heartRate.max,
             }}
             title="Heart-rate trend"
             unit="bpm"
@@ -302,8 +302,8 @@ export function ClinicalDetails({
             kind="respiration"
             points={foal.clinicalSeries.respirationTrend}
             range={{
-              minimum: DEMONSTRATION_RANGES.respirationRate.min,
-              maximum: DEMONSTRATION_RANGES.respirationRate.max,
+              minimum: foal.monitoringSettings.respirationRate.min,
+              maximum: foal.monitoringSettings.respirationRate.max,
             }}
             title="Respiration-rate trend"
             unit="breaths/min"

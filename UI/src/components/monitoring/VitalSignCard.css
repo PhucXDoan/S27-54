@@ -20,8 +20,14 @@
 .monitor-vital-card__header {
   align-items: flex-start;
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
   justify-content: space-between;
+}
+
+.monitor-vital-card__header .monitor-status-badge {
+  max-width: 100%;
+  white-space: normal;
 }
 
 .monitor-vital-card__header h2 {

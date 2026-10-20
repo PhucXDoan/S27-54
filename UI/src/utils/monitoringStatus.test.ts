@@ -6,7 +6,7 @@ import {
   formatRespirationRate,
   formatVitalDelta,
 } from './formatters'
-import { getRangeStatus, getTrendDirection, sortFoalsByPriority } from './monitoringStatus'
+import { getRangeStatus, getReadingRangeStatus, getTrendDirection, sortFoalsByPriority } from './monitoringStatus'
 import { createInitialFoals } from '../data/mockFoals'
 
 describe('monitoring status mappings', () => {
@@ -24,6 +24,30 @@ describe('monitoring status mappings', () => {
     expect(getTrendDirection(77, 80, 1)).toBe('down')
     expect(getTrendDirection(81, 80, 1)).toBe('stable')
     expect(getTrendDirection(null, 80, 1)).toBe('stable')
+  })
+
+  it.each([
+    [49, 'below'], [50, 'buffer'], [59, 'buffer'], [60, 'within'],
+    [120, 'within'], [121, 'buffer'], [130, 'buffer'], [131, 'above'],
+  ] as const)('evaluates %s against inclusive range and buffer boundaries as %s', (value, expected) => {
+    expect(getRangeStatus(value, { min: 60, max: 120, buffer: 10 })).toBe(expected)
+  })
+
+  it('has no amber interval when the buffer is zero', () => {
+    expect(getRangeStatus(59, { min: 60, max: 120, buffer: 0 })).toBe('below')
+    expect(getRangeStatus(121, { min: 60, max: 120, buffer: 0 })).toBe('above')
+  })
+
+  it('keeps invalid, stale, and poor-signal readings unavailable', () => {
+    const range = { min: 60, max: 120, buffer: 10 }
+    for (const value of [null, NaN, Infinity, -1]) {
+      expect(getRangeStatus(value, range)).toBe('unavailable')
+    }
+    const reading = createInitialFoals()[0]!.measurement.heartRate
+    expect(getReadingRangeStatus({ ...reading, isStale: true }, range)).toBe('unavailable')
+    expect(getReadingRangeStatus({ ...reading, signalQuality: 'poor' }, range)).toBe('unavailable')
+    expect(getReadingRangeStatus({ ...reading, signalQuality: 'unavailable' }, range)).toBe('unavailable')
+    expect(getReadingRangeStatus({ ...reading, signalQuality: 'fair' }, range)).toBe('within')
   })
 
   it('prioritizes clinical and equipment states ahead of normal monitoring', () => {

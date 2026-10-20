@@ -6,18 +6,21 @@ import type {
   SensorStatus,
   SignalQuality,
   TrendDirection,
+  VitalReading,
 } from '../../types/monitoring'
 import type { StatusBadgeTone } from './StatusBadge'
 
 export const rangeStatusLabels: Record<RangeStatus, string> = {
   within: 'Within configured range',
-  above: 'Above configured range',
-  below: 'Below configured range',
+  buffer: 'Outside range, within alert buffer',
+  above: 'Beyond alert limit',
+  below: 'Beyond alert limit',
   unavailable: 'Signal unavailable',
 }
 
 export const rangeStatusTones: Record<RangeStatus, StatusBadgeTone> = {
   within: 'positive',
+  buffer: 'warning',
   above: 'critical',
   below: 'critical',
   unavailable: 'neutral',
@@ -110,14 +113,35 @@ export function createTrendAccessibleLabel(
 
   const rangePhrase: Record<Exclude<RangeStatus, 'unavailable'>, string> = {
     within: 'remains within the configured range',
-    above: 'is above the configured range',
-    below: 'is below the configured range',
+    buffer: 'is outside the configured range, within the alert buffer',
+    above: 'is beyond the upper alert limit',
+    below: 'is beyond the lower alert limit',
   }
 
-  if (direction === 'stable' || delta === null) {
+  if (delta === null || !Number.isFinite(delta)) {
+    return `${label} change is unavailable and ${rangePhrase[status]}.`
+  }
+
+  if (direction === 'stable') {
     return `${label} has no significant change and ${rangePhrase[status]}.`
   }
 
   const verb = direction === 'up' ? 'increased' : 'decreased'
   return `${label} ${verb} by ${Math.abs(delta)} ${unit} and ${rangePhrase[status]}.`
+}
+
+/** A retained or unreliable value must not imply a current physiological status. */
+export function getReadingRangeStatus(reading: VitalReading): RangeStatus {
+  if (
+    reading.value === null ||
+    !Number.isFinite(reading.value) ||
+    reading.value < 0 ||
+    reading.isStale ||
+    reading.signalQuality === 'poor' ||
+    reading.signalQuality === 'unavailable'
+  ) {
+    return 'unavailable'
+  }
+
+  return reading.status
 }

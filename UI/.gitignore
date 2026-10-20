@@ -1,0 +1,5 @@
+# Local dependencies and caches; this repository currently tracks dist.
+node_modules/
+.vite/
+*.local
+*.log
