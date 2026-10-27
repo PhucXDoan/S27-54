@@ -1,0 +1,17 @@
+{
+    "compilerOptions" : {
+        "target"           : "ES2022",   // Version of JS the TS compiler emits.
+        "module"           : "NodeNext", // How `import`/`export`s are compiled.
+        "moduleResolution" : "NodeNext", // "
+        "rootDir"          : "./source", // Obviously the source code folder.
+        "outDir"           : "./build",  // Obviously the compiler output folder.
+        "strict"           : true,       // Stricter compiler checks.
+        "skipLibCheck"     : true,       // Don't care about type-errors within dependencies.
+        "types"            : [           // Packages that provide global names (e.g., `process` from `"node"`).
+            "node"
+        ]
+    },
+    "include" : [                        // The files and directories to type-check and compile.
+        "./source"
+    ]
+}
