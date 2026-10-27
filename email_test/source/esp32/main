@@ -1,0 +1,121 @@
+#include <WiFi.h>
+#include <HTTPClient.h>
+
+
+
+static const char* const WIFI_SSID     = "Collegiate Suites Residents";
+static const char* const WIFI_PASSWORD = "BasicPoemForce";
+static const char* const SERVER_URL    = "http://172.16.13.227:3000/device_payload";
+
+
+
+extern void
+setup(void)
+{
+
+    Serial.begin(115200);
+
+
+
+    // Connect to the server.
+
+    {
+
+        WiFi.mode(WIFI_STA);
+        WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+
+        while (true)
+        {
+
+            int status = WiFi.status();
+
+            Serial.printf
+            (
+                "Connecting to `%s` :: (WiFi.status() = %d) == (WL_CONNECTED = %d)...\n",
+                WIFI_SSID,
+                status,
+                WL_CONNECTED
+            );
+
+            if (status == WL_CONNECTED)
+            {
+                break;
+            }
+            else
+            {
+                delay(100);
+            }
+
+        }
+
+    }
+    Serial.printf("Connected. ESP32 IP: %s\n", WiFi.localIP().toString().c_str());
+
+
+
+    // Count down...
+
+    for (int i = 5; i >= 1; i -= 1)
+    {
+      Serial.printf("%d...\n", i);
+      delay(1000);
+    }
+
+
+
+    // Send the POST comamnd.
+
+    const char* device_id           = "HORSE_FLOCK_3000";
+    int         a_very_useful_value = 69696969;
+    {
+
+        char body[128] = {};
+        snprintf
+        (
+            body,
+            sizeof(body),
+            "{\"device_id\":\"%s\",\"a_very_useful_value\":%d}",
+            device_id,
+            a_very_useful_value
+        );
+
+        auto http = HTTPClient();
+        http.setTimeout(5000);
+        http.begin(SERVER_URL);
+        http.addHeader("Content-Type", "application/json");
+        {
+
+            int post_code = http.POST(body);
+
+            if (post_code >= 1)
+            {
+                Serial.printf
+                (
+                    "POST %s -> %d, reply: %s\n",
+                    body,
+                    post_code,
+                    http.getString().c_str()
+                );
+            }
+            else
+            {
+                Serial.printf
+                (
+                    "POST failed: %s\n",
+                    HTTPClient::errorToString(post_code).c_str()
+                );
+            }
+
+        }
+        http.end();
+
+    }
+
+}
+
+
+
+extern void
+loop(void)
+{
+}
