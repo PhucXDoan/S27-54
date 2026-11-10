@@ -1,11 +1,75 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
+#include <DNSServer.h>
+#include <AsyncTCP.h>
+#include <ESPAsyncWebServer.h>
 
 
 
 static const char* const WIFI_SSID     = "Collegiate Suites Residents";
 static const char* const WIFI_PASSWORD = "BasicPoemForce";
 static const char* const SERVER_URL    = "http://172.16.13.227:3000/device_payload";
+
+static auto GLOBAL_dns_server = DNSServer();
+static auto GLOBAL_portal     = AsyncWebServer(80);
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Callbacks for the captive portal.
+//
+
+
+
+extern void
+portal_callback_on_http_get(AsyncWebServerRequest* request)
+{
+
+    static const char PORTAL_HTML[] =
+        {
+            #embed "portal.html"
+            , '\0'
+        };
+
+    request->send(200, "text/html", PORTAL_HTML);
+
+}
+
+
+
+extern void
+portal_callback_on_form_submission(AsyncWebServerRequest* request)
+{
+
+    auto field_input_0 = request->hasParam("field_input_0", true) ? request->getParam("field_input_0", true)->value() : "";
+    auto field_input_1 = request->hasParam("field_input_1", true) ? request->getParam("field_input_1", true)->value() : "";
+
+    Serial.printf
+    (
+        "0: `%s` | 1: `%s`\n",
+        field_input_0.c_str(),
+        field_input_1.c_str()
+    );
+
+    request->send(200, "text/html", "<h3>Thanks! You're all set.</h3>");
+
+}
+
+
+
+extern void
+portal_callback_to_redirect(AsyncWebServerRequest* request)
+{
+    request->redirect("http://192.168.4.1/");
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Main initialization and update loop.
+//
 
 
 
@@ -17,99 +81,159 @@ setup(void)
 
 
 
-    // Connect to the server.
-
+    #if 1 // Initialization of the captive portal.
     {
 
-        WiFi.mode(WIFI_STA);
-        WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+        // Set up the ESP32's Wi-Fi access-point.
 
-        while (true)
-        {
+        static const auto ACCESS_POINT_IP = IPAddress(192, 168, 4, 1);
 
-            int status = WiFi.status();
+        WiFi.mode(WIFI_AP);
 
-            Serial.printf
-            (
-                "Connecting to `%s` :: (WiFi.status() = %d) == (WL_CONNECTED = %d)...\n",
-                WIFI_SSID,
-                status,
-                WL_CONNECTED
-            );
-
-            if (status == WL_CONNECTED)
-            {
-                break;
-            }
-            else
-            {
-                delay(100);
-            }
-
-        }
-
-    }
-    Serial.printf("Connected. ESP32 IP: %s\n", WiFi.localIP().toString().c_str());
-
-
-
-    // Count down...
-
-    for (int i = 5; i >= 1; i -= 1)
-    {
-      Serial.printf("%d...\n", i);
-      delay(1000);
-    }
-
-
-
-    // Send the POST comamnd.
-
-    const char* device_id           = "HORSE_FLOCK_3000";
-    int         a_very_useful_value = 69696969;
-    {
-
-        char body[128] = {};
-        snprintf
+        WiFi.softAPConfig
         (
-            body,
-            sizeof(body),
-            "{\"device_id\":\"%s\",\"a_very_useful_value\":%d}",
-            device_id,
-            a_very_useful_value
+            ACCESS_POINT_IP,
+            ACCESS_POINT_IP,
+            IPAddress(255, 255, 255, 0)
         );
 
-        auto http = HTTPClient();
-        http.setTimeout(5000);
-        http.begin(SERVER_URL);
-        http.addHeader("Content-Type", "application/json");
+        WiFi.softAP("PETAH Portal");
+
+
+
+        // Set up the captive portal.
+
+        GLOBAL_portal.on("/"      , HTTP_GET , portal_callback_on_http_get       );
+        GLOBAL_portal.on("/submit", HTTP_POST, portal_callback_on_form_submission);
+
+        static const char* const PROBES[] =
+            {
+                "/generate_204",              // Android.
+                "/gen_204",                   // "
+                "/hotspot-detect.html",       // Apple.
+                "/library/test/success.html", // "
+                "/connecttest.txt",           // Windows.
+                "/ncsi.txt",                  // "
+                "/redirect",                  // "
+                "/canonical.html",            // Firefox.
+                "/success.txt",               // "
+            };
+
+        for (auto probe : PROBES)
+        {
+            GLOBAL_portal.on(probe, HTTP_ANY, portal_callback_to_redirect);
+        }
+
+        GLOBAL_portal.onNotFound(portal_callback_to_redirect);
+
+        GLOBAL_portal.begin();
+
+        GLOBAL_dns_server.start(53, "*", ACCESS_POINT_IP);
+
+    }
+    #endif
+
+
+
+    #if 0 // Sending telemetry data to our local server.
+    {
+
+        // Connect to the server.
+
         {
 
-            int post_code = http.POST(body);
+            WiFi.mode(WIFI_STA);
+            WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
-            if (post_code >= 1)
+            while (true)
             {
+
+                int status = WiFi.status();
+
                 Serial.printf
                 (
-                    "POST %s -> %d, reply: %s\n",
-                    body,
-                    post_code,
-                    http.getString().c_str()
+                    "Connecting to `%s` :: (WiFi.status() = %d) == (WL_CONNECTED = %d)...\n",
+                    WIFI_SSID,
+                    status,
+                    WL_CONNECTED
                 );
-            }
-            else
-            {
-                Serial.printf
-                (
-                    "POST failed: %s\n",
-                    HTTPClient::errorToString(post_code).c_str()
-                );
+
+                if (status == WL_CONNECTED)
+                {
+                    break;
+                }
+                else
+                {
+                    delay(100);
+                }
+
             }
 
         }
-        http.end();
+        Serial.printf("Connected. ESP32 IP: %s\n", WiFi.localIP().toString().c_str());
+
+
+
+        // Count down...
+
+        for (int i = 5; i >= 1; i -= 1)
+        {
+          Serial.printf("%d...\n", i);
+          delay(1000);
+        }
+
+
+
+        // Send the POST comamnd.
+
+        const char* device_id           = "HORSE_FLOCK_3000";
+        int         a_very_useful_value = 69696969;
+        {
+
+            char body[128] = {};
+            snprintf
+            (
+                body,
+                sizeof(body),
+                "{\"device_id\":\"%s\",\"a_very_useful_value\":%d}",
+                device_id,
+                a_very_useful_value
+            );
+
+            auto http = HTTPClient();
+            http.setTimeout(5000);
+            http.begin(SERVER_URL);
+            http.addHeader("Content-Type", "application/json");
+            {
+
+                int post_code = http.POST(body);
+
+                if (post_code >= 1)
+                {
+                    Serial.printf
+                    (
+                        "POST %s -> %d, reply: %s\n",
+                        body,
+                        post_code,
+                        http.getString().c_str()
+                    );
+                }
+                else
+                {
+                    Serial.printf
+                    (
+                        "POST failed: %s\n",
+                        HTTPClient::errorToString(post_code).c_str()
+                    );
+                }
+
+            }
+            http.end();
+
+        }
 
     }
+    #endif
 
 }
 
@@ -118,4 +242,9 @@ setup(void)
 extern void
 loop(void)
 {
+    #if 1
+    {
+        GLOBAL_dns_server.processNextRequest();
+    }
+    #endif
 }
