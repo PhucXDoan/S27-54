@@ -8,4 +8,5 @@ node_modules/
 *.local
 *.log
 *.env
+*.bak
 ~*
